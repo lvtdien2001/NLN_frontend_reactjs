@@ -14,4 +14,26 @@
 
 7. bootstrap: framework CSS
 
-#
+# Features
+
+- Login
+
+- Register
+
+- CURD production
+
+- CURD product in cart
+
+- Update, Read, Delete user
+
+- Update, Read orders with user, admin
+
+- Order product - payment
+
+- Search - Filter product
+
+- Comment - Rating product
+
+- Update, Read user information
+
+- Grossing product
