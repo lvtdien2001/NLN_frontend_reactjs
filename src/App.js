@@ -1,24 +1,26 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { publicRoutes, privateRoutes, adminRoutes } from './routes'
+import { publicRoutes } from './routes';
+import DefaultHeader from "./components/Header/DefaultHeader";
 
 function App() {
-  let routeUser = publicRoutes;
-  if (true){
-    routeUser = [...privateRoutes];
-    routeUser = [...adminRoutes];
-  }
+  var routeUser = publicRoutes;
+  // if (true){
+  //   routeUser = [...privateRoutes];
+  //   routeUser = [...adminRoutes];
+  // }
   return (
     <Router>
-      <div className="">
+      <div>
+          <DefaultHeader />
           <Routes>
             { routeUser.map((route, index) => {
-              const Page = route.component;
-              return (
-                <Route key={index} path={route.path} element={<Page />} ></Route>
-              )
-            }
+                const Page = route.component;
+                return (
+                  <Route key={index} path={route.path} element={<Page />} ></Route>
+                )
+              }
             
-            ) }
+            )}
           </Routes>
       </div>
     </Router>
