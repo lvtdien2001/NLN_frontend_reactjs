@@ -12,16 +12,18 @@ function App() {
     <Router>
       <div>
           <DefaultHeader />
-          <Routes>
-            { routeUser.map((route, index) => {
-                const Page = route.component;
-                return (
-                  <Route key={index} path={route.path} element={<Page />} ></Route>
-                )
-              }
+          <main className="container">
+            <Routes>
+              { routeUser.map((route, index) => {
+                  const Page = route.component;
+                  return (
+                    <Route key={index} path={route.path} element={<Page />} ></Route>
+                  )
+                }
             
-            )}
-          </Routes>
+              )}
+            </Routes>
+          </main>
       </div>
     </Router>
   );
