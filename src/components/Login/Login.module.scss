@@ -1,0 +1,26 @@
+.wrapper {
+    margin: 10px 0px;
+    
+}
+
+.layout {
+    border: solid 1px #333;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.title {
+    font-size: 1.6rem;
+    font-weight: bold;
+    font-family: var(--title-font);
+}
+
+.check-box {
+    margin-right: 16px;
+}
+
+.txt-register {
+    color: var(--bs-blue);
+    cursor: pointer;
+    text-decoration: underline;
+}

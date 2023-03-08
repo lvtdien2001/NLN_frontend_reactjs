@@ -1,12 +1,12 @@
 import Home from '../views/Home'
+import Auth from '../views/Auth'
 
 // Public router - non_login
 const publicRoutes = [
     { path: '/', component: Home },
     { path: '/products', component: Home },
     { path: '/product/:id', component: Home },
-    { path: '/login', component: Home },
-    { path: '/register', component: Home },
+    { path: '/auth', component: Auth },
     { path: '/search', component: Home }
 ]
 
