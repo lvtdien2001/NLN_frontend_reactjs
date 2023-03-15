@@ -1,0 +1,24 @@
+.table {
+    margin-top: 40px;
+}
+
+.detailContent {
+    color: var(--bs-blue);
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.addBtn {
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+.filterBtn {
+    display: flex;
+    align-items: center;
+}
+
+.selectFilter {
+    width: 50%;
+    margin-left: 12px;
+}
