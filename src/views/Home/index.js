@@ -1,10 +1,16 @@
-
+import CarouselCard from '../../components/CarouselCard';
+import HotProducts from '../../components/HotProducts';
+import ProductCategories from '../../components/ProductCategories';
+import ProductSuggest from '../../components/ProductSuggest';
 
 function Home() {
     return (
-        <div>
-            <h1>Home Page</h1>
-        </div>
+        <>
+            <CarouselCard />
+            <ProductCategories />
+            <HotProducts />
+            <ProductSuggest />
+        </>
     );
 }
 
