@@ -1,5 +1,12 @@
-.detailBtn {
-    color: var(--bs-blue);
-    cursor: pointer;
-    text-decoration: underline;
+
+
+.filterBtn {
+    display: flex;
+    align-items: center;
+    margin: 20px 0px;
+}
+
+.selectFilter {
+    width: 50%;
+    margin-left: 12px;
 }
