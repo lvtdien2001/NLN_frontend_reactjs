@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { publicRoutes, adminRoutes, privateRoutes } from './routes';
+import { publicRoutes } from './routes';
 import DefaultHeader from "./components/Header/DefaultHeader";
 import ProtectedRoute from "./components/routing/ProtectedRoute";
 import AdminRoute from "./components/routing/AdminRoute";

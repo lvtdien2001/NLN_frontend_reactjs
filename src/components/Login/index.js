@@ -69,10 +69,9 @@ function Login(){
                         <Link to=''>Quên mật khẩu</Link>
                     </Form.Group>
                     <div className="text-end row justify-content-around">
-                        <div
-                            className={`text-start col-sm-5 ${cx('txt-register')}`}>
-                                <Register/>
-                            </div>
+                        <div className={`text-start col-sm-5 ${cx('txt-register')}`}>
+                            <Register/>
+                        </div>
                         <div className="col-sm-5">
                             <Button 
                                 variant="primary" 
