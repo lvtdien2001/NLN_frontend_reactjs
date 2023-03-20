@@ -1,3 +1,41 @@
 .header {
-    background-color: #333;
+    background-color: rgb(219, 230, 230);
+}
+
+.rightHeader, .leftHeader {
+    margin: 10px 0px;
+}
+
+.sideBar {
+    color: #333;
+    text-decoration: none;
+    
+}
+
+.hrefUnderline {
+    text-decoration: none;
+    color: #000;
+}
+
+.menuItems {
+    width: 100px;
+}
+
+.contentCenter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+// .cart, .support, .user {
+//     height: 40px;
+// }
+
+.cart, .support {
+    margin: 0px 5px;
+}
+
+.user {
+    margin-right: 10px;
+    margin-left: 5px;
 }
