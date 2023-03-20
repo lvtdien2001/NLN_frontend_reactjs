@@ -10,6 +10,10 @@ const cx = classNames.bind(styles);
 
 function InputSearch() {
     const [valueSearch, setValueSearch] = useState('');
+    const navigate = useNavigate();
+    const handleClickSearch = () => {
+        return navigate(`/search/${valueSearch}`)
+    }
 
     const handleChange = (e) => {
         if (e.key === 'Enter'){

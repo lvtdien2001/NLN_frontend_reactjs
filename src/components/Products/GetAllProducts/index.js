@@ -1,5 +1,5 @@
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
+
+import ProductItem from '../ProductItem';
 
 function GetAllProducts() {
     const listProducts = [
@@ -205,7 +205,7 @@ function GetAllProducts() {
             description: 'abc xyz',
             quantity: 100
         },{
-            id: 11,
+            id: 13,
             name: 'San pham 3',
             images: [
                 {
@@ -224,18 +224,7 @@ function GetAllProducts() {
     ]
 
     const renderLists = listProducts.map((product) => 
-        <div key={product.id} className='col-sm-12 col-md-6 col-lg-3'>
-            <Card style={{ width: '18rem' }}>
-                <Card.Img variant="top" src={product.images[0].image} />
-                <Card.Body>
-                    <Card.Title>{product.name}</Card.Title>
-                    <Card.Text>
-                        {product.description}
-                    </Card.Text>
-                    <Button variant="primary">Đặt hàng</Button>
-                </Card.Body>
-            </Card>
-        </div>
+        <ProductItem key={product.id} product={product} />
                   
        
      )
