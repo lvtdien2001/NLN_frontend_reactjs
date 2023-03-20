@@ -67,20 +67,28 @@ function ProductCategories() {
             imgUrl: 'https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn//content/icon-camera-128x129.png'
         }
     ]
-
+    const categoryLists = categoryList.map((category) => (
+        <div key={category.id} className={cx('category-item')}>
+                        <img src={category.imgUrl} alt="img" width='80px' height='80px' />
+                        <div >{category.name}</div>
+        </div>
+    ))
     return (
-        <div className={`${cx('wrapper')}`}>
-            <b className={cx('title')}>DANH MỤC SẢN PHẨM</b>
-            <div className={`row justify-content-around ${cx('content')}`}>
-                {categoryList.map(category => {
-                    return (
-                        <div key={category.id} className={`col-sm-1 align-items-center ${cx('items')}`}>
-                            <img src={category.imgUrl} alt="img" width='80px' height='80px' />
-                            <div className='text-center'>{category.name}</div>
-                        </div>
-                    )
-                })}
-            </div>
+        // <div className={`${cx('wrapper')}`}>
+        //     <b className={cx('title')}>DANH MỤC SẢN PHẨM</b>
+        //     <div className={`row justify-content-around ${cx('content')}`}>
+        //         {categoryList.map(category => {
+        //             return (
+        //                 <div key={category.id} className={`col-sm-1 align-items-center ${cx('items')}`}>
+        //                     <img src={category.imgUrl} alt="img" width='80px' height='80px' />
+        //                     <div className='text-center'>{category.name}</div>
+        //                 </div>
+        //             )
+        //         })}
+        //     </div>
+        // </div>
+        <div className={cx('layout-category')}>
+            {categoryLists}
         </div>
     )
 }

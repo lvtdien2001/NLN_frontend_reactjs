@@ -3,10 +3,12 @@
     border: solid 1px #333;
     border-radius: 5px;
     margin: 20px 0px;
+    
 }
 
 .items {
     cursor: pointer;
+   
 }
 
 .title {
@@ -16,4 +18,21 @@
 
 .content {
     margin: 5px 5px;
+    
+}
+//KY fixed ui
+.layout-category {
+    display: flex;
+    overflow: scroll;
+    // overflow-x: hidden;
+    overflow-y: hidden;
+}
+.category-item {
+    cursor: pointer;
+    min-width: 200px;
+    border-right: 4px solid #3498db;
+    margin: 12px;
+    &:hover {
+        transform: scale(1.1);
+    }
 }

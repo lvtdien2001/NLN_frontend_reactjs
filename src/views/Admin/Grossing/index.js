@@ -1,9 +1,9 @@
+import React from 'react'
 
-
-function Grossing() {
-    return (
-        <></>
-    )
+const AdminGrossing = () => {
+  return (
+    <div>AdminGrossing</div>
+  )
 }
 
-export default Grossing
+export default AdminGrossing

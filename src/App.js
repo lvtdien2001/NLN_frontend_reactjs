@@ -1,23 +1,40 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { publicRoutes } from './routes';
 import DefaultHeader from "./components/Header/DefaultHeader";
+import ProtectedRoute from "./components/routing/ProtectedRoute";
+import AdminRoute from "./components/routing/AdminRoute";
+import { useContext } from "react";
+import { AuthContext } from "./context/AuthContext";
 
 function App() {
-  var routeUser = publicRoutes;
-  // if (true){
-  //   routeUser = [...privateRoutes];
-  //   routeUser = [...adminRoutes];
-  // }
+  const {authState: {user}} = useContext(AuthContext)
+ 
   return (
     <Router>
       <div>
           <DefaultHeader />
           <main className="container">
             <Routes>
-              { routeUser.map((route, index) => {
+              { publicRoutes.map((route, index) => {
                   const Page = route.component;
                   return (
-                    <Route key={index} path={route.path} element={<Page />} ></Route>
+                    <Route key={index} path={route.path} element={Page} ></Route>
+                  )
+                }
+            
+              )}
+               { privateRoutes.map((route, index) => {
+                  const Page = route.component;
+                  return (
+                    <Route key={index} path={route.path} element={<ProtectedRoute>{Page}</ProtectedRoute>} ></Route>
+                  )
+                }
+            
+              )}
+               {adminRoutes.map((route, index) => {
+                  const Page = route.component;
+                  return (
+                    <Route key={index} path={route.path} element={<AdminRoute>{Page}</AdminRoute> } ></Route>
                   )
                 }
             

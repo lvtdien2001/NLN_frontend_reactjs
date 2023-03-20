@@ -20,7 +20,58 @@ import styles from './DefaultHeader.module.scss'
 const cx = classNames.bind(styles);
 
 function DefaultHeader () {
-    
+    const listCategorys = [
+        {
+            id: 1,
+            title:'Điện thoại',
+            icon: <BsFillPhoneFill />,
+            link: '/products'
+        },
+        {
+            id: 2,
+            title:'Laptop',
+            icon: <BsLaptop />,
+            link: '/products'
+        },
+        {
+            id: 3,
+            title:'Âm thanh',
+            icon: <BsHeadphones />,
+            link: '/products',
+        },
+        {
+            id: 4,
+            title:'Đồng hồ',
+            icon: <BsSmartwatch />,
+            link: '/products',
+        },
+        {
+            id: 5,
+            title:'Bộ nhớ',
+            icon: <GrMemory />,
+            link: '/products',
+        },
+        {
+            id: 6,
+            title:'Phụ kiện',
+            icon: <MdDevicesOther />,
+            link: '/products',
+        },
+
+    ];
+    const bodyCategorys = listCategorys.map((category) => (
+        <ListGroup horizontal key={category.id} >
+            <ListGroup.Item className={cx('list-item')}>
+                <Link className={cx('sideBar')} to={category.link}>
+                    <div className={cx('contentCenter')}>
+                       <div className={cx('item-icon')}>
+                            {category.icon}
+                        </div>
+                    </div>
+                </Link>
+            </ListGroup.Item>
+        </ListGroup>
+    ))
     return (
         <header className={`container ${cx('header')}`}>
             <div className='row d-flex justify-content-between'>
@@ -34,66 +85,32 @@ function DefaultHeader () {
                                 </Link>
                             </Navbar.Brand>
                             <Navbar.Collapse id="navbarScroll">
-                                <Nav
-                                    className="me-auto my-2 my-lg-0"
-                                    style={{ maxHeight: '100px' }}
-                                    navbarScroll
-                                >
-                                    <ListGroup horizontal>
-                                        <ListGroup.Item>
-                                            <Link className={cx('sideBar')} to='/products'>
-                                                <div className={cx('contentCenter')}>
-                                                    <BsFillPhoneFill /> Điện thoại
-                                                </div>
-                                            </Link>
-                                        </ListGroup.Item>
-                                    </ListGroup>
-                                    <ListGroup horizontal>
-                                        <ListGroup.Item>
-                                            <Link className={cx('sideBar')} to='/products'>
-                                                <div className={cx('contentCenter')}>
-                                                    <BsLaptop /> Laptop
-                                                </div>
-                                            </Link>
-                                        </ListGroup.Item>
-                                    </ListGroup>
-                                    <ListGroup horizontal>
-                                        <ListGroup.Item>
-                                            <Link className={cx('sideBar')} to='/products'>
-                                                <div className={cx('contentCenter')}>
-                                                    <BsHeadphones /> Âm thanh
-                                                </div>
-                                            </Link>
-                                        </ListGroup.Item>
-                                    </ListGroup>
-                                    <ListGroup horizontal>
-                                        <ListGroup.Item>
-                                            <Link className={cx('sideBar')} to='/products'>
-                                                <div className={cx('contentCenter')}>
-                                                    <BsSmartwatch /> Đồng hồ
-                                                </div>
-                                            </Link>
-                                        </ListGroup.Item>
-                                    </ListGroup>
-                                    <ListGroup horizontal>
-                                        <ListGroup.Item>
-                                            <Link className={cx('sideBar')} to='/products'>
-                                                <div className={cx('contentCenter')}>
-                                                    <GrMemory /> Bộ nhớ
-                                                </div>
-                                            </Link>
-                                        </ListGroup.Item>
-                                    </ListGroup>
-                                    <ListGroup horizontal>
-                                        <ListGroup.Item>
-                                            <Link className={cx('sideBar')} to='/products'>
-                                                <div className={cx('contentCenter')}>
-                                                    <MdDevicesOther /> Phụ kiện
-                                                </div>
-                                            </Link>
-                                        </ListGroup.Item>
-                                    </ListGroup>
-                                </Nav>
+                    
+                                        <Nav
+                                            className="me-auto my-2 my-lg-0"
+                                            style={{ maxHeight: '100px' }}
+                                            navbarScroll
+                                        >
+                                            <Nav.Link href="#action1">Home</Nav.Link>
+                                            <Nav.Link href="#action2">Link</Nav.Link>
+                                            <NavDropdown title="Link" id="navbarScrollingDropdown">
+                                            <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
+                                            <NavDropdown.Item href="#action4">
+                                                Another action
+                                            </NavDropdown.Item>
+                                            <NavDropdown.Divider />
+                                            <NavDropdown.Item href="#action5">
+                                                Something else here
+                                            </NavDropdown.Item>
+                                            </NavDropdown>
+                                            <Nav.Link href="#" disabled>
+                                            Link
+                                            </Nav.Link>
+                                        </Nav>
+                    
+                    
+                    
+                    
                             </Navbar.Collapse>
                     
                         </Container>

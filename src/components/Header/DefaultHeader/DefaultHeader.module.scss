@@ -11,6 +11,9 @@
     text-decoration: none;
     
 }
+.list-item {
+    margin: 4px;
+}
 
 .hrefUnderline {
     text-decoration: none;
@@ -20,11 +23,12 @@
 .menuItems {
     width: 100px;
 }
-
+.item-icon {
+    font-size: 2rem;
+}
 .contentCenter {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    justify-content: space-around;
 }
 
 // .cart, .support, .user {

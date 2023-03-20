@@ -1,5 +1,6 @@
 import { Table, Form } from 'react-bootstrap';
 import classNames from 'classnames/bind';
+import { Link } from 'react-router-dom';
 
 import styles from './ProductsTable.module.scss';
 import { productsList } from '../productsList';
@@ -54,7 +55,9 @@ function ProductsTable() {
                                         <td className="text-center">{product.price}.000 đ</td>
                                         <td className="text-center">
                                             <div className={cx('detailContent')}>
-                                                Xem chi tiết
+                                                <Link to={`/product/${product.id}`}>
+                                                    Xem chi tiết
+                                                </Link>
                                             </div>
                                         </td>
                                         <td className="text-center">
