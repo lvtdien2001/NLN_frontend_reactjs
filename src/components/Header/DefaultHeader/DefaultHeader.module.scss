@@ -1,3 +1,45 @@
 .header {
-    background-color: #333;
+    background-color: rgb(219, 230, 230);
+}
+
+.rightHeader, .leftHeader {
+    margin: 10px 0px;
+}
+
+.sideBar {
+    color: #333;
+    text-decoration: none;
+    
+}
+.list-item {
+    margin: 4px;
+}
+
+.hrefUnderline {
+    text-decoration: none;
+    color: #000;
+}
+
+.menuItems {
+    width: 100px;
+}
+.item-icon {
+    font-size: 2rem;
+}
+.contentCenter {
+    display: flex;
+    justify-content: space-around;
+}
+
+// .cart, .support, .user {
+//     height: 40px;
+// }
+
+.cart, .support {
+    margin: 0px 5px;
+}
+
+.user {
+    margin-right: 10px;
+    margin-left: 5px;
 }

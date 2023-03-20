@@ -24,7 +24,7 @@ const TestRating = () => {
     ]
     const rateLists = rates.map((rate) =>(
         <div  key={rate.id} onClick={() => handleRate(rate.id)}>
-           { rate.id <= rated ? <AiFillStar /> :<AiOutlineStar />}
+           { rate.id <= rated ? <AiFillStar style={{color: '#f1c40f'}} /> :<AiOutlineStar />}
         </div>
     ))
   return (

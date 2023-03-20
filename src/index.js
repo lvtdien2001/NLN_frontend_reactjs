@@ -4,14 +4,17 @@ import 'bootstrap/dist/css/bootstrap.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import GlobalStyle from './components/CSS/GlobalStyle';
+import AuthContextProvider from './context/AuthContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <GlobalStyle>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  </GlobalStyle>
+  <AuthContextProvider>
+    <GlobalStyle>
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </GlobalStyle>
+  </AuthContextProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function
