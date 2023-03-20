@@ -1,13 +1,15 @@
-import { Home, Auth, Products } from '../views'
-import { AdminProducts, AdminUsers, AdminOrders, AdminGrossing } from '../views/Admin'
+import Home from '../views/Home'
+import Auth from '../views/Auth'
+import Products from '../views/Products'
 
 // Public router - non_login
 const publicRoutes = [
     { path: '/', component: Home },
     { path: '/products', component: Products },
-    { path: '/product/:id', component: Home },
+    { path: '/product/:id', component: ProductDetail },
     { path: '/auth', component: Auth },
-    { path: '/search', component: Home }
+    { path: '/search/:query', component: Search },
+    { path: '/test', component: TestRating },
 ]
 
 // Private router - login with user

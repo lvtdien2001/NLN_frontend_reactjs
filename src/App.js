@@ -1,13 +1,13 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { publicRoutes, privateRoutes, adminRoutes } from './routes';
+import { publicRoutes } from './routes';
 import DefaultHeader from "./components/Header/DefaultHeader";
 
 function App() {
   var routeUser = publicRoutes;
-  if (true){
-    routeUser = [...routeUser, ...privateRoutes];
-    routeUser = [...routeUser, ...adminRoutes];
-  }
+  // if (true){
+  //   routeUser = [...privateRoutes];
+  //   routeUser = [...adminRoutes];
+  // }
   return (
     <Router>
       <div>
