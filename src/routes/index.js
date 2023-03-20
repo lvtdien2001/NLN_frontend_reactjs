@@ -3,7 +3,6 @@ import Auth from '../views/Auth'
 import Products from '../views/Products'
 import ProductDetail from '../views/ProductDetail'
 import Search from '../views/Search';
-import TestRating from '../Test/TestRating';
 import UserInfor from '../views/UserInfor';
 
 import { AdminProducts, AdminUsers, AdminOrders, AdminGrossing } from '../views/Admin';
@@ -22,7 +21,7 @@ const publicRoutes = [
 const privateRoutes = [
     { path: '/profile', component:<UserInfor />},
     { path: '/orders/:userId', component: Home },
-    { path: '/cart/:userId', component: Home }
+    { path: '/cart/:userId', component: Home },
 ]
 
 // Admin router - login with admin account
