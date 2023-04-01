@@ -13,7 +13,7 @@ import { AuthContext } from "../../context/AuthContext";
 const cx = classNames.bind(styles);
 
 function Login(){
-    const {loginUser} = useContext(AuthContext)
+    const {loginUser, setShowToast, setInforMessage} = useContext(AuthContext)
     const [formData, setFormData] = useState({
         username:'',
         password:''
@@ -33,7 +33,11 @@ function Login(){
             e.preventDefault();
         try {
             const response = await loginUser(formData)
-            
+            if(response.success) {
+                setShowToast(true);
+                setInforMessage({type:'success', title: 'Đăng nhập', description:'bạn đã đăng nhập thành công !!'})
+                
+            }
         } catch (error) {
             console.log(error)
         }

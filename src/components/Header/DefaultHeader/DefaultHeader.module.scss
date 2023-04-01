@@ -1,18 +1,13 @@
 .header {
-    background-color: rgb(219, 230, 230);
+    background-color: #dbe6e6;
 }
 
 .rightHeader, .leftHeader {
     margin: 10px 0px;
 }
 
-.sideBar {
-    color: #333;
-    text-decoration: none;
-    
-}
-.list-item {
-    margin: 4px;
+.bg {
+    background-color: #dbe6e6;
 }
 
 .hrefUnderline {
@@ -20,26 +15,45 @@
     color: #000;
 }
 
-.menuItems {
-    width: 100px;
-}
-.item-icon {
-    font-size: 2rem;
-}
 .contentCenter {
     display: flex;
-    justify-content: space-around;
+    align-items: center;
+    justify-content: center;
+    min-width: 90px;
+    min-height: 20px;
 }
 
-// .cart, .support, .user {
-//     height: 40px;
-// }
+.alignCenter {
+    display: flex;
+    align-items: center;
+}
 
 .cart, .support {
-    margin: 0px 5px;
+    margin: 5px;
+}
+
+.cart {
+    margin-right: 10px;
 }
 
 .user {
     margin-right: 10px;
     margin-left: 5px;
+}
+
+.menuList {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #333;
+    min-width: 110px;
+    min-height: 20px;
+    padding: 5px;
+    font-weight: bolder;
+    border-bottom: solid 1px #333;
+    margin: 10px;
+    text-decoration: none;
+    &:hover {
+        background-color: #fff;
+    }
 }

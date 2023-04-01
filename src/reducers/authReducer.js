@@ -1,6 +1,7 @@
-import { SET_AUTH, UPDATE_USER_INFO, UPDATE_USER_IMAGE } from "../context/constanst";
-export const authReducer = (state, action) => {
-    const {type, payload: {isAuthenticated, user}} = action;
+import { SET_AUTH, UPDATE_USER_INFO, UPDATE_USER_IMAGE, CREATE_NEW_ADDRESS, DELETE_ADDRESS, UPDATE_ADDRESS_DEFAULT } from "../context/constanst";
+
+const authReducer = (state, action) => {
+    const {type, payload: {isAuthenticated, user, allAddresses, newAddress, addressID}} = action;
 
     switch (type) {
         case SET_AUTH:
@@ -8,7 +9,8 @@ export const authReducer = (state, action) => {
                 ...state,
                 authLoading: false,
                 isAuthenticated,
-                user
+                user,
+                allAddresses
             }
             case UPDATE_USER_INFO:
                 return {
@@ -22,9 +24,28 @@ export const authReducer = (state, action) => {
                     isAuthenticated,
                     user
                 }
-            
-    
+            case CREATE_NEW_ADDRESS:
+                return {
+                    ...state,
+                    allAddresses: [...state.allAddresses, newAddress]
+                }
+            case DELETE_ADDRESS:
+                return {
+                    ...state,
+                    allAddresses: state.allAddresses.filter(address => address._id !== addressID)
+                }
+            case UPDATE_ADDRESS_DEFAULT:
+                const id = state.allAddresses.find(address => address._id === addressID);
+                // const newUpdate = {...state.user, id}
+                // console.log('idaddres',id)
+                // console.log('user', user)
+                return {
+                    ...state,
+                    user: {...state.user, address: id}
+                }
         default:
             break;
     }
 }
+
+export default authReducer

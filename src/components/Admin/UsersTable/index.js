@@ -1,11 +1,7 @@
-import { Table, Form } from 'react-bootstrap';
-import classNames from 'classnames/bind';
+import { Table } from 'react-bootstrap';
 
-import styles from './UsersTable.module.scss';
 import { usersList } from '../usersList';
 import RemoveUser from '../RemoveUser';
-
-const cx = classNames.bind(styles);
 
 function UsersTable() {
 

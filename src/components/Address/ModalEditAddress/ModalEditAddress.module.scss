@@ -1,0 +1,8 @@
+.btn-edit {
+    color: var(--info);
+    font-weight:500 ;
+    cursor: pointer;
+    &:hover {
+        font-weight: 700;
+    }
+}

@@ -1,31 +1,34 @@
-//import { Table, Form } from 'react-bootstrap';
+import { useContext } from 'react';
 import classNames from 'classnames/bind';
-
 import styles from '../InfoUser/Information.module.scss';
-import moment from 'moment';
-import 'moment/locale/vi';
-//import { productsList, usersList } from '../Admin/usersList';
-import { userInformation } from '../user';
+
+import { AuthContext } from '../../../context/AuthContext';
+
 import EditInfo from '../EditInfo';
 import { Container, Row, Col } from 'react-bootstrap';
+
+
+
+
 const cx = classNames.bind(styles);
 
 function InfoUser() {
-    console.log(userInformation)
+    const {authState: {user}} = useContext(AuthContext)
+ 
     const body = (
         <Container>
             <Row>
                 <Col>
                     <div>
                         <div className={cx('title')}>
-                            TITLE
+                            THÔNG TIN CÁ NHÂN
                         </div>
                         <div className={cx('user-item')}>
                             <div>
                                 Họ và tên:
                             </div>
                             <div className={cx('user-value')}>
-                                {userInformation.fullName}
+                                {user.fullName}
                             </div>
                         </div>
                         <div className={cx('user-item')}>
@@ -33,7 +36,7 @@ function InfoUser() {
                                 Giới tính:
                             </div>
                             <div className={cx('user-value')}>
-                                {userInformation.gender ?'Nam' : 'Nữ'}
+                                {user.gender ?'Nam' : 'Nữ'}
                             </div>
                         </div>
                         <div className={cx('user-item')}>
@@ -41,27 +44,24 @@ function InfoUser() {
                                 Số điện thoại:
                             </div>
                             <div className={cx('user-value')}>
-                                {userInformation.numberPhone}
+                                {user.phoneNumber ? user.phoneNumber : 'Chua co sdt'}
                             </div>
                         </div>
                         <div className={cx('user-item')}>
                             <div>
-                                Ngày sinh:
+                                Tiền hiện có:
                             </div>
                             <div className={cx('user-value')}>
-                                {moment(userInformation.yearOfBirth).format('ll')}
+                                {user.cash ? user.cash : 'Không có đồng nào bạn ơi. haha !!'}
                             </div>
                         </div>
-                        <EditInfo />
+                        <div className={cx('btn-edit')}>
+                            <EditInfo />
+                        </div>
+                        
                     </div>
                 </Col>
-                <Col>
-                <div className={cx('title')}>Avatar</div>
-                <div className={cx('layout-avatar')}>
-                    <img src={userInformation.avatar} alt='avatar' />
-                </div>
-                
-                </Col>
+
             </Row>
       </Container>
     )

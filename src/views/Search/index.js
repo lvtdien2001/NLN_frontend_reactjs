@@ -1,8 +1,9 @@
-import { useParams } from "react-router-dom";
+
 import hinh from '../../assets/images/hinh1.jpg';
 import GetAllProducts from "../../components/Products/GetAllProducts";
+
 function Search() {
-    const {query} = useParams();
+
     const searchProducts = [
         {
             id: 1,

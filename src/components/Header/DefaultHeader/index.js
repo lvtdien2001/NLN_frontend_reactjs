@@ -1,21 +1,21 @@
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames/bind';
 
 // bootstrap
-import { Container, Nav, Navbar, Dropdown, DropdownButton, ListGroup, Button } from 'react-bootstrap';
-import { BsFillPhoneFill, BsHeadphones, BsLaptop, BsSmartwatch, BsCart } from 'react-icons/bs';
+import { Container, Nav, Navbar, Button } from 'react-bootstrap';
 
 // icons
+import { BsFillPhoneFill, BsHeadphones, BsLaptop, BsSmartwatch, BsCart } from 'react-icons/bs';
 import { GrMemory } from 'react-icons/gr';
 import { MdDevicesOther, MdOutlineContactSupport } from 'react-icons/md';
-import { AiOutlineUser, AiOutlineFileText, AiOutlineLogout } from 'react-icons/ai';
-import { FaUsers } from 'react-icons/fa';
-import { RiBillLine } from 'react-icons/ri';
 
-
+import { AuthContext } from '../../../context/AuthContext';
 import InputSearch from '../../InputSearch';
 import logo from '../../../public/images/logo.png';
 import styles from './DefaultHeader.module.scss'
+import DropdownContent from '../DropdownContent';
+import LoginBtn from '../LoginBtn';
 
 const cx = classNames.bind(styles);
 
@@ -60,24 +60,20 @@ function DefaultHeader () {
 
     ];
     const bodyCategorys = listCategorys.map((category) => (
-        <ListGroup horizontal key={category.id} >
-            <ListGroup.Item className={cx('list-item')}>
-                <Link className={cx('sideBar')} to={category.link}>
-                    <div className={cx('contentCenter')}>
-                       <div className={cx('item-icon')}>
-                            {category.icon}
-                        </div>
-                    </div>
-                </Link>
-            </ListGroup.Item>
-        </ListGroup>
+        <Link key={category.id} to='/' className={cx('menuList')}>
+            {category.icon}
+            {category.title}
+        </Link>
     ))
+    
+    const { authState } = useContext(AuthContext);
+
     return (
         <header className={`container ${cx('header')}`}>
             <div className='row d-flex justify-content-between'>
                 <div className={`col-sm-6 col-xl-8 ${cx('leftHeader')}`}>
-                    <Navbar bg="light" expand="lg">
-                        <Container fluid>
+                    <Navbar expand="lg">
+                        <Container className={cx('bg')} fluid>
                             <Navbar.Toggle aria-controls="navbarScroll" />
                             <Navbar.Brand as='span'>
                                 <Link to='/' className={cx('hrefUnderline')} >
@@ -85,39 +81,19 @@ function DefaultHeader () {
                                 </Link>
                             </Navbar.Brand>
                             <Navbar.Collapse id="navbarScroll">
-                    
-                                        <Nav
-                                            className="me-auto my-2 my-lg-0"
-                                            style={{ maxHeight: '100px' }}
-                                            navbarScroll
-                                        >
-                                            <Nav.Link href="#action1">Home</Nav.Link>
-                                            <Nav.Link href="#action2">Link</Nav.Link>
-                                            <NavDropdown title="Link" id="navbarScrollingDropdown">
-                                            <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
-                                            <NavDropdown.Item href="#action4">
-                                                Another action
-                                            </NavDropdown.Item>
-                                            <NavDropdown.Divider />
-                                            <NavDropdown.Item href="#action5">
-                                                Something else here
-                                            </NavDropdown.Item>
-                                            </NavDropdown>
-                                            <Nav.Link href="#" disabled>
-                                            Link
-                                            </Nav.Link>
-                                        </Nav>
-                    
-                    
-                    
-                    
+                                <Nav
+                                    className="me-auto my-2 my-lg-0"
+                                    navbarScroll
+                                >
+                                    {bodyCategorys}                  
+                                </Nav>
                             </Navbar.Collapse>
                     
                         </Container>
                     </Navbar>
                 </div>
                 <div className={`col-sm-6 col-xl-4 ${cx('rightHeader')}`}>
-                    <div className='d-flex justify-content-end' >
+                    <div className={`d-flex justify-content-end ${cx('alignCenter')}`} >
                         <Button className={cx('support', 'contentCenter')} variant='light'>
                             <Link to='/support' className={cx('hrefUnderline')}>
                                 <MdOutlineContactSupport /> Hỗ trợ
@@ -128,53 +104,9 @@ function DefaultHeader () {
                                 <BsCart /> Giỏ hàng
                             </Link>
                         </Button>
-                        <DropdownButton
-                            align="end"
-                            title={<AiOutlineUser />}
-                            id="dropdown-menu-align-end"
-                            variant='light' 
-                            className={cx('contentCenter', 'user')}
-                        >
-                            <Dropdown.Item as='div'>
-                                <Link className={cx('hrefUnderline')} to='/profile'>
-                                    <AiOutlineUser /> Thông tin cá nhân
-                                </Link>
-                            </Dropdown.Item>
-                            <Dropdown.Item as='div'>
-                                <Link className={cx('hrefUnderline')} to='#'>
-                                    <AiOutlineFileText /> Lịch sử giao dịch
-                                </Link>
-                            </Dropdown.Item>
-
-                            <Dropdown.Divider />
-
-                            <Dropdown.Item as='div'>
-                                Admin
-                            </Dropdown.Item>
-                            <Dropdown.Item as='div'>
-                                <Link className={cx('hrefUnderline')} to='/admin/users'>
-                                    <FaUsers /> Quản lý người dùng
-                                </Link>
-                            </Dropdown.Item>
-                            <Dropdown.Item as='div'>
-                                <Link className={cx('hrefUnderline')} to='/admin/orders'>
-                                    <RiBillLine /> Quản lý đơn hàng
-                                </Link>
-                            </Dropdown.Item>
-                            <Dropdown.Item as='div'>
-                                <Link className={cx('hrefUnderline')} to='/admin/products'>
-                                    <MdDevicesOther /> Quản lý sản phẩm
-                                </Link>
-                            </Dropdown.Item>
-
-                            <Dropdown.Divider />
-
-                            <Dropdown.Item as='div'>
-                                <Link className={`${cx('hrefUnderline')} text-danger`} to='/profile'>
-                                    <AiOutlineLogout /> Đăng xuất
-                                </Link>
-                            </Dropdown.Item>
-                        </DropdownButton>
+                        {authState.isAuthenticated ? <DropdownContent /> : <LoginBtn />}
+                        
+                        
                     </div>
                     <InputSearch />
                 </div>

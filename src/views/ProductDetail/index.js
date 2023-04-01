@@ -1,40 +1,47 @@
 import { useParams } from "react-router-dom"
-import hinh from '../../assets/images/hinh1.jpg';
-import classNames from 'classnames/bind';
-import styles from './ProductDetail.module.scss';
+
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-
+import { API } from "../../context/constanst";
 
 import ProductItem from "../../components/Products/ProductItem";
-const cx = classNames.bind(styles)
+import { useEffect, useState } from "react";
+import axios from "axios";
+import CustomSpinner from "../../components/CustomSpinner";
+
+
 function ProductDetail() {
+    const [loading, setLoading] = useState(true);
+    const [product, setProduct] = useState({});
     const {id} = useParams();
-    const product = 
-        {
-            id: 1,
-            name: 'San pham 1',
-            images: [
-                {
-                    id: 1,
-                    image: hinh
-                },
-                {
-                    id: 2,
-                    image: hinh,
-                },
-            ],
-            price: 500,
-            description: 'abc xyz',
-            quantity: 100
+
+    useEffect(() => {
+        const getProductById = async () => {
+            try {
+                const res = await axios.get(`${API}/api/product/${id}`)
+                if(res.data.success) {
+                    setLoading(false);
+                    setProduct(res.data.product)
+                    
+                }
+            } catch (error) {
+                console.log(error)
+            }
+            
         }
+
+        getProductById()
+    }, [id])
+
+
+    console.log(product)
     
     return (
         <Container>
             <Row>
                 <Col md={{ span: 8, offset: 2 }}>
-                    <ProductItem product={product} />
+                   {loading ? <CustomSpinner /> :  <ProductItem product={product} show={false} />}
                 </Col> 
             </Row>
            

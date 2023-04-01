@@ -4,8 +4,11 @@ import Products from '../views/Products'
 import ProductDetail from '../views/ProductDetail'
 import Search from '../views/Search';
 import UserInfor from '../views/UserInfor';
+import Cart from '../views/Cart';
 
 import { AdminProducts, AdminUsers, AdminOrders, AdminGrossing } from '../views/Admin';
+import { Address } from '../views';
+import AddressForm from '../components/Address/AddressForm';
 
 
 // Public router - non_login
@@ -20,8 +23,10 @@ const publicRoutes = [
 // Private router - login with user
 const privateRoutes = [
     { path: '/profile', component:<UserInfor />},
+    { path: '/address', component:<Address />},
+    { path: '/address/create', component:<AddressForm />},
     { path: '/orders/:userId', component: Home },
-    { path: '/cart/:userId', component: Home },
+    { path: '/cart', component: <Cart /> },
 ]
 
 // Admin router - login with admin account

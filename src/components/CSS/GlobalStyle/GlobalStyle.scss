@@ -1,5 +1,18 @@
 :root {
     --title-font: Arial, Helvetica, sans-serif;
+    --background--primary : #dbe6e6;
     
+    --gray: #7f8c8d;
+    --white: #fff;
+    --dangerous: #d63031;
+    --info: #0984e3;
 }
 
+body {
+    background: var(--background--primary);
+    // background-color: #dbe6e6;
+}
+
+.dropdown-item.active, .dropdown-item:active {
+    background: none !important;
+}

@@ -10,7 +10,7 @@ const cx = classNames.bind(styles);
 function EditProduct({ data }) {
     const [show, setShow] = useState(false);
     const [name, setName] = useState(data.name);
-    const [images, setImages] = useState(data.images);
+    const [images] = useState(data.images);
     const [quantity, setQuantity] = useState(data.quantity);
     const [price, setPrice] = useState(data.price);
     const [description, setDescription] = useState(data.description);

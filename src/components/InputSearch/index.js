@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { BsSearch } from 'react-icons/bs';
 import { Form, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import classNames from 'classnames/bind';
 
 import styles from './InputSearch.module.scss';
@@ -11,21 +11,13 @@ const cx = classNames.bind(styles);
 function InputSearch() {
     const [valueSearch, setValueSearch] = useState('');
     const navigate = useNavigate();
-    const handleClickSearch = () => {
-        return navigate(`/search/${valueSearch}`)
-    }
 
-    const handleChange = (e) => {
-        if (e.key === 'Enter'){
-            console.log('Enter');
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (valueSearch.length > 0){
+            navigate(`/search?q=${valueSearch}`);
+            setValueSearch('');
         }
-        else {
-            setValueSearch(e.target.value);
-        }
-    }
-
-    const handleSubmit = () => {
-
     }
 
     return (
@@ -33,15 +25,18 @@ function InputSearch() {
             <Form.Control
             type="search"
             value={valueSearch}
-            onChange={(e) => handleChange(e)}
+            onChange={(e) => setValueSearch(e.target.value)}
             placeholder="Search"
             className="me-2"
             aria-label="Search"
+            required
             />
-            <Button className={cx('btnSearch')} variant="outline-primary">
-                <Link to='/search'>
-                    <BsSearch />
-                </Link>
+            <Button 
+                className={cx('btnSearch')} 
+                variant="outline-primary"
+                onClick={handleSubmit}
+            >
+                <BsSearch />
             </Button>
         </Form>
     )

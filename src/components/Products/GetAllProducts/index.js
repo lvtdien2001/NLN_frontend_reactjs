@@ -10,7 +10,7 @@ function GetAllProducts({listProducts}) {
    
 
     const renderLists = listProducts.map((product) => 
-    <div key={product.id} className={`col-sm-12 col-md-6 col-lg-3 ${cx('layout')}`}>
+    <div key={product._id} className={`col-sm-12 col-md-6 col-lg-3 ${cx('layout')}`}>
         <ProductItem  product={product} />
     </div>
         

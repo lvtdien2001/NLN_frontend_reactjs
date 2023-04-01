@@ -1,0 +1,16 @@
+.position {
+    position: fixed;
+    top: 100px;
+    right: 10px;
+    max-width: 95vw;
+    // width: 100%;
+    z-index: 10000;
+}
+@media (min-width:320px) and (max-width:420px){
+    .position {
+        top: 20px;
+        right: 0;
+    }
+}
+
+

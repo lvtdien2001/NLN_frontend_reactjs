@@ -5,15 +5,18 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import GlobalStyle from './components/CSS/GlobalStyle';
 import AuthContextProvider from './context/AuthContext';
+import ProductContextProvider from './context/ProductContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <AuthContextProvider>
-    <GlobalStyle>
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
-    </GlobalStyle>
+    <ProductContextProvider>
+      <GlobalStyle>
+        <React.StrictMode>
+          <App />
+        </React.StrictMode>
+      </GlobalStyle>
+    </ProductContextProvider>
   </AuthContextProvider>
 );
 

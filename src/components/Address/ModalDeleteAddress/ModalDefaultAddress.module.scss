@@ -1,0 +1,25 @@
+.layout-information {
+    display: flex;
+    margin-top: 12px;
+}
+.phoneNumber {
+    margin-left: 10px;
+    padding-left: 10px;
+    border-left: 1px solid var(--gray);
+}
+.address {
+    border-bottom: 1px solid var(--gray);
+    font-size: 1.6rem;
+}
+.description {
+    margin: 10px 0;
+    word-wrap: break-word;
+}
+.btn-delete {
+    color: var(--dangerous);
+    font-weight:500 ;
+    cursor: pointer;
+    &:hover {
+        font-weight: 700;
+    }
+}
