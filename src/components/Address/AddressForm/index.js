@@ -7,6 +7,7 @@ import { addressApi } from './addressApi';
 import { Button, Container, Row, Col } from 'react-bootstrap';
 
 
+import { MessageContext } from '../../../context/MessageContext';
 import { AuthContext } from '../../../context/AuthContext';
 import CustomSpinner from '../../CustomSpinner';
 import CustomToast from '../../CustomToast';
@@ -17,7 +18,8 @@ const cx = classNames.bind(styles);
 
 function AddressForm() {
   const navigate = useNavigate();
-  const {createAddress, setShowToast, setInforMessage, inforMessage} = useContext(AuthContext);
+  const { setShowToast, setInforMessage, inforMessage} = useContext(MessageContext);
+  const {createAddress} = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
 
   const [provinces, setProvinces] = useState([]);
@@ -251,7 +253,7 @@ function AddressForm() {
                   </div>
                   {address}
                   <div className={cx('form-item')}>
-                    <label htmlFor='description' className={cx('title-input')}>Mô tả chi tiết nơi nhận hàng :</label>
+                    <label htmlFor='description' className={cx('title-input')}>Địa chỉ:</label>
                     <input 
                       className={cx('value-input')} 
                       type='text' 
@@ -259,6 +261,7 @@ function AddressForm() {
                       name='description'
                       value={description}
                       onChange={handleChangeData}
+                      placeholder='Tên đường, số nhà, khu vực, ...'
                     />
                   </div>
                  

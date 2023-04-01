@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import {Toast} from 'react-bootstrap';
-import { AuthContext } from '../../context/AuthContext';
+import { MessageContext } from '../../context/MessageContext';
 import classNames from "classnames/bind";
 import styles from './CustomToast.module.scss';
 
@@ -8,7 +8,7 @@ import styles from './CustomToast.module.scss';
 
 const cx = classNames.bind(styles);
 const CustomToast = ({type, description,title}) => {
-    const {showToast, setShowToast} = useContext(AuthContext)
+    const {showToast, setShowToast} = useContext(MessageContext)
   return (
     <div
       className={cx('position')}

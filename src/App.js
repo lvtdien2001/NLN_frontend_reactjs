@@ -4,11 +4,11 @@ import DefaultHeader from "./components/Header/DefaultHeader";
 import ProtectedRoute from "./components/routing/ProtectedRoute";
 import AdminRoute from "./components/routing/AdminRoute";
 import { useContext } from "react";
-import { AuthContext } from "./context/AuthContext";
+import { MessageContext } from "./context/MessageContext";
 import CustomToast from "./components/CustomToast";
 
 function App() {
-  const { inforMessage} = useContext(AuthContext)
+  const { inforMessage} = useContext(MessageContext)
  
   return (
     <Router>

@@ -6,16 +6,19 @@ import reportWebVitals from './reportWebVitals';
 import GlobalStyle from './components/CSS/GlobalStyle';
 import AuthContextProvider from './context/AuthContext';
 import ProductContextProvider from './context/ProductContext';
+import MessageContextProvider from './context/MessageContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <AuthContextProvider>
     <ProductContextProvider>
-      <GlobalStyle>
-        <React.StrictMode>
-          <App />
-        </React.StrictMode>
-      </GlobalStyle>
+      <MessageContextProvider>
+        <GlobalStyle>
+          <React.StrictMode>
+            <App />
+          </React.StrictMode>
+        </GlobalStyle>
+      </MessageContextProvider>
     </ProductContextProvider>
   </AuthContextProvider>
 );

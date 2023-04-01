@@ -60,14 +60,14 @@ function DefaultHeader () {
 
     ];
     const bodyCategorys = listCategorys.map((category) => (
-        <Link key={category.id} to='/' className={cx('menuList')}>
+        <Link key={category.id} to={category.link} className={cx('menuList')}>
             {category.icon}
             {category.title}
         </Link>
     ))
     
     const { authState } = useContext(AuthContext);
-
+    // console.log(authState);
     return (
         <header className={`container ${cx('header')}`}>
             <div className='row d-flex justify-content-between'>
@@ -105,7 +105,6 @@ function DefaultHeader () {
                             </Link>
                         </Button>
                         {authState.isAuthenticated ? <DropdownContent /> : <LoginBtn />}
-                        
                         
                     </div>
                     <InputSearch />

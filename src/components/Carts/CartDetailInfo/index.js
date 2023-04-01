@@ -19,13 +19,17 @@ const CartDetailInfo = ({ data }) =>{
     const { totalAmount, products, productUpdate } = cartState;
 
     useEffect(() => {
-        const fetchApi = async () => {
+        const fetchApiUpdate = async () => {
             const { cartId, quantity } = productUpdate;
             await request
                 .put(`/cart/${cartId}`, { quantity })
         }
 
-        productUpdate && fetchApi();
+        const fetchApiRemove = async () => {
+
+        }
+
+        productUpdate && fetchApiUpdate();
     }, [productUpdate])
 
     // Format name
@@ -101,7 +105,9 @@ const CartDetailInfo = ({ data }) =>{
 
     const handleUpdateQuantity = (operator, product) => {
         const { quantity } = product;
+        if (quantity===1) return;
         if (operator==='-'){
+            
             dispatch({
                 type: SET_PRODUCT_UPDATE,
                 payload: {
@@ -120,6 +126,10 @@ const CartDetailInfo = ({ data }) =>{
             })
         }
     }   
+
+    const handleRemoveProduct = (cartId) => {
+        // console.log(cartId);
+    }
 
     return (
         <div>
@@ -179,10 +189,10 @@ const CartDetailInfo = ({ data }) =>{
                         <Col xl={6}>
                             <Row className={`align-items-center text-center`}>
                                 <Col xl={2}>
-                                    Màu sắc: {color}
+                                    { color && <>Màu sắc: {color}</> } 
                                 </Col>
                                 <Col xl={2}>
-                                    {size}
+                                    { size }
                                 </Col>
                                 <Col xl={3}>
                                     {formatPrice(price.toString())} đ
@@ -209,7 +219,13 @@ const CartDetailInfo = ({ data }) =>{
                                 </Col>
                             </Row>
                         </Col>
-                        <Col className={`text-center ${cx('btnRemove')}`} xl={1}><FaTrash /> Xóa</Col>
+                        <Col 
+                            className={`text-center ${cx('btnRemove')}`} 
+                            xl={1}><FaTrash
+                            onClick={handleRemoveProduct(cartId)}
+                        /> 
+                            Xóa
+                        </Col>
                     </Row>
                 )
             })}

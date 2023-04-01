@@ -3,29 +3,33 @@ import classNames from "classnames/bind";
 import { useState, useContext } from "react";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 
 import Register from '../Register';
 import styles from './Login.module.scss';
 import { AuthContext } from "../../context/AuthContext";
+import { MessageContext } from "../../context/MessageContext";
 
 
 const cx = classNames.bind(styles);
 
 function Login(){
-    const {loginUser, setShowToast, setInforMessage} = useContext(AuthContext)
+    const {loginUser } = useContext(AuthContext)
+    const { setShowToast, setInforMessage} = useContext(MessageContext)
     const [formData, setFormData] = useState({
         username:'',
         password:''
     })
 
     const {username, password} = formData;
+
+    const navigate = useNavigate();
+
     const handleChangeData = (e) => {
         setFormData({
           ...formData,
           [e.target.name]: e.target.value
         })
-        console.log(e.target.value)
         
       }
 
@@ -33,10 +37,11 @@ function Login(){
             e.preventDefault();
         try {
             const response = await loginUser(formData)
+            
             if(response.success) {
                 setShowToast(true);
                 setInforMessage({type:'success', title: 'Đăng nhập', description:'bạn đã đăng nhập thành công !!'})
-                
+                // navigate('/');
             }
         } catch (error) {
             console.log(error)

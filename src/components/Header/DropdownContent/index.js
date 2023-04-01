@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import classNames from 'classnames/bind';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Dropdown, DropdownButton } from 'react-bootstrap';
 
 import { AiOutlineUser, AiOutlineFileText, AiOutlineLogout } from 'react-icons/ai';
@@ -18,24 +18,30 @@ const DropdownContent = () => {
     const { logOutUser, authState } = useContext(AuthContext);
     const { isAdmin } = authState.user;
 
+    // const navigate = useNavigate();
+
+    // const handleNavigation = (path) => {
+    //     navigate(path);
+    // }
+
     const Admin = () => {
         return (
             <>
-                <Dropdown.Item as='div'>
-                    <Link className={cx('hrefUnderline')} to='/admin/users'>
+                <Link className={cx('hrefUnderline')} to='/admin/users'>
+                    <Dropdown.Item as='div'>
                         <FaUsers /> Quản lý người dùng
-                    </Link>
-                </Dropdown.Item>
-                <Dropdown.Item as='div'>
-                    <Link className={cx('hrefUnderline')} to='/admin/orders'>
+                    </Dropdown.Item>
+                </Link>
+                <Link className={cx('hrefUnderline')} to='/admin/orders'>
+                    <Dropdown.Item as='div'>
                         <RiBillLine /> Quản lý đơn hàng
-                    </Link>
-                </Dropdown.Item>
-                <Dropdown.Item as='div'>
-                    <Link className={cx('hrefUnderline')} to='/admin/products'>
+                    </Dropdown.Item>
+                </Link>
+                <Link className={cx('hrefUnderline')} to='/admin/products'>
+                    <Dropdown.Item as='div'>
                         <MdDevicesOther /> Quản lý sản phẩm
-                    </Link>
-                </Dropdown.Item>
+                    </Dropdown.Item>
+                </Link>
 
                 <Dropdown.Divider />
             </>
@@ -51,36 +57,38 @@ const DropdownContent = () => {
             variant='light' 
             className={cx('contentCenter', 'user')}
         >
-            <Dropdown.Item as='div'>
-                <Link className={cx('hrefUnderline')} to='/profile'>
+            
+            <Link className={cx('hrefUnderline')} to='/profile'>
+                <Dropdown.Item as='div' >
                     <AiOutlineUser /> Thông tin cá nhân
-                </Link>
-            </Dropdown.Item>
-            <Dropdown.Item as='div'>
-                <Link className={cx('hrefUnderline')} to='/profile'>
+                </Dropdown.Item>
+            </Link>
+            
+            <Link className={cx('hrefUnderline')} to='/address'>
+                <Dropdown.Item as='div'>
                     <FaRegAddressCard /> Quản lý địa chỉ
-                </Link>
-            </Dropdown.Item>
-            <Dropdown.Item as='div'>
-                <Link className={cx('hrefUnderline')} to='#'>
+                </Dropdown.Item>
+            </Link>
+            <Link className={cx('hrefUnderline')} to='#'>
+                <Dropdown.Item as='div'>
                     <MdOutlinePayment /> Tài khoản thanh toán
-                </Link>
-            </Dropdown.Item>
-            <Dropdown.Item as='div'>
-                <Link className={cx('hrefUnderline')} to='#'>
+                </Dropdown.Item>
+            </Link>
+            <Link className={cx('hrefUnderline')} to='#'>
+                <Dropdown.Item as='div'>
                     <AiOutlineFileText /> Lịch sử giao dịch
-                </Link>
-            </Dropdown.Item>
+                </Dropdown.Item>
+            </Link>
 
             <Dropdown.Divider />
             
             {isAdmin && <Admin />}
 
-            <Dropdown.Item as='div'  onClick={logOutUser}>
-                <Link className={`${cx('hrefUnderline')} text-danger`} >
+            <Link className={`${cx('hrefUnderline')}`} >
+                <Dropdown.Item className='text-danger' as='div'  onClick={logOutUser}>
                     <AiOutlineLogout /> Đăng xuất
-                </Link>
-            </Dropdown.Item>
+                </Dropdown.Item>
+            </Link>
         </DropdownButton>
     )
 }

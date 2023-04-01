@@ -23,7 +23,7 @@ function ProductCategories() {
 
     
     const categoryLists = category.map((category) => (
-        <div key={category.id} className={cx('category-item')}>
+        <div key={category._id} className={cx('category-item')}>
                         {/* <img src={category.imgUrl} alt="img" width='80px' height='80px' /> */}
                         <div >{category.category}</div>
         </div>

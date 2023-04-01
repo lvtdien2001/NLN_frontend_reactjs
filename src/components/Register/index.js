@@ -2,9 +2,11 @@ import React, { useContext, useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
+import { MessageContext } from '../../context/MessageContext';
 
 function Register(){
-    const {registerUser, setInforMessage, setShowToast} = useContext(AuthContext)
+    const {registerUser} = useContext(AuthContext);
+    const {setInforMessage, setShowToast} = useContext(MessageContext);
     const [show, setShow] = useState(false);
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
