@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { API } from '../../context/constanst';
 
 import styles from './ProductCategories.module.scss';
+import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
@@ -23,14 +24,16 @@ function ProductCategories() {
 
     
     const categoryLists = category.map((category) => (
-        <div key={category._id} className={cx('category-item')}>
-                        {/* <img src={category.imgUrl} alt="img" width='80px' height='80px' /> */}
-                        <div >{category.category}</div>
-        </div>
+        <Link  key={category._id} className={cx('link')} to={`/${category.category}`}>
+            <div className={cx('category-item')}>
+                <img className={cx('category-image')} src={category.image} alt="img" width='80px' height='80px' />
+                <div className={cx('category-name')}>{category.category}</div>
+            </div>
+        </Link>
     ))
     return (
         
-        <div className={cx('layout-category')}>
+        <div className={`justify-content-center ${cx('layout-category')}`}>
             {categoryLists}
         </div>
     )

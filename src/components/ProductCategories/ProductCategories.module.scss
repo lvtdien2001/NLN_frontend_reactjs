@@ -27,12 +27,22 @@
     // overflow-x: hidden;
     overflow-y: hidden;
 }
+.link {
+    text-decoration: none;
+}
 .category-item {
     cursor: pointer;
     min-width: 200px;
-    border-right: 4px solid #3498db;
+    border-right: 1px solid #3498db;
     margin: 12px;
-    &:hover {
-        transform: scale(1.1);
+    text-align: center;
+    .category-image {
+        &:hover {
+            transform: scale(1.1);
+        }
+    }
+    .category-name {
+        color: var(--gray);
+        
     }
 }

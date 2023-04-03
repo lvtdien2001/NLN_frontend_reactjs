@@ -7,7 +7,6 @@ import { Container, Nav, Navbar, Button } from 'react-bootstrap';
 
 // icons
 import { BsFillPhoneFill, BsHeadphones, BsLaptop, BsSmartwatch, BsCart } from 'react-icons/bs';
-import { GrMemory } from 'react-icons/gr';
 import { MdDevicesOther, MdOutlineContactSupport } from 'react-icons/md';
 
 import { AuthContext } from '../../../context/AuthContext';
@@ -47,12 +46,6 @@ function DefaultHeader () {
         },
         {
             id: 5,
-            title:'Bộ nhớ',
-            icon: <GrMemory />,
-            link: '/products',
-        },
-        {
-            id: 6,
             title:'Phụ kiện',
             icon: <MdDevicesOther />,
             link: '/products',
@@ -94,16 +87,16 @@ function DefaultHeader () {
                 </div>
                 <div className={`col-sm-6 col-xl-4 ${cx('rightHeader')}`}>
                     <div className={`d-flex justify-content-end ${cx('alignCenter')}`} >
-                        <Button className={cx('support', 'contentCenter')} variant='light'>
-                            <Link to='/support' className={cx('hrefUnderline')}>
+                        <Link to='/support' className={cx('hrefUnderline')}>
+                            <Button className={cx('support', 'contentCenter')} variant='light'>
                                 <MdOutlineContactSupport /> Hỗ trợ
-                            </Link>
-                        </Button>
-                        <Button className={cx('cart', 'contentCenter')} variant='light'>
-                            <Link className={cx('hrefUnderline')} to='/cart'>
+                            </Button>
+                        </Link>
+                        <Link className={cx('hrefUnderline')} to='/cart'>
+                            <Button className={cx('cart', 'contentCenter')} variant='light'>
                                 <BsCart /> Giỏ hàng
-                            </Link>
-                        </Button>
+                            </Button>
+                        </Link>
                         {authState.isAuthenticated ? <DropdownContent /> : <LoginBtn />}
                         
                     </div>

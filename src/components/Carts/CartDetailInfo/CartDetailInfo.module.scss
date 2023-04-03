@@ -41,6 +41,7 @@
 }
 
 .btn {
+
     border: solid 1px #b9b5b5;
     cursor: pointer;
     &:hover {
@@ -52,14 +53,6 @@
     &:hover {
         cursor: pointer;
         color: var(--bs-red);
-    }
-}
-
-.btnOrder {
-    border: solid 1px var(--bs-green);
-    &:hover {
-        border: solid 1px var(--bs-red);
-        background-color: #fff;
     }
 }
 

@@ -1,5 +1,5 @@
 .wrapper {
-    background-color: rgb(218, 212, 206);
+    background: var(--white);
     border: solid 1px #333;
     border-radius: 5px;
     margin: 20px 0px;
@@ -8,9 +8,35 @@
 .items {
     margin: 10px;
     cursor: pointer;
+    text-decoration: none;
+    position: relative;
 }
 
 .title {
     font-size: 24px;
     margin: 15px;
+}
+.item-image {
+    margin-top: 12px ;
+    cursor: pointer;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+    transition: transform linear 0.1s;
+    will-change: transform;
+    &:hover {
+        transform: translateY(-10px);
+       box-shadow: 0 1px 20px 0 rgba(0, 0, 0, 0.05);
+       
+    }
+}
+.item-hot {
+    position: absolute;
+    top: 10px;
+    left: -4px;
+    color: var(--white) ;
+    background: var(--dangerous);
+    font-size: 1.2rem;
+    font-weight: 500;
+    line-height: 1.6rem;
+    padding-right: 4px;
+    border-radius: 3px;
 }

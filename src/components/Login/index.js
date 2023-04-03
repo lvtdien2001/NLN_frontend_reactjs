@@ -3,7 +3,7 @@ import classNames from "classnames/bind";
 import { useState, useContext } from "react";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import {Link, useNavigate} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 import Register from '../Register';
 import styles from './Login.module.scss';
@@ -23,7 +23,6 @@ function Login(){
 
     const {username, password} = formData;
 
-    const navigate = useNavigate();
 
     const handleChangeData = (e) => {
         setFormData({
@@ -41,7 +40,7 @@ function Login(){
             if(response.success) {
                 setShowToast(true);
                 setInforMessage({type:'success', title: 'Đăng nhập', description:'bạn đã đăng nhập thành công !!'})
-                // navigate('/');
+                
             }
         } catch (error) {
             console.log(error)

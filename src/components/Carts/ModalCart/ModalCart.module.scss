@@ -3,8 +3,7 @@
 }
 .detail {
     display: flex;
-    overflow: scroll;
-    overflow-y : hidden;
+    flex-wrap: wrap;
     
 }
 .layout-detail {

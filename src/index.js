@@ -4,21 +4,25 @@ import 'bootstrap/dist/css/bootstrap.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import GlobalStyle from './components/CSS/GlobalStyle';
-import AuthContextProvider from './context/AuthContext';
-import ProductContextProvider from './context/ProductContext';
-import MessageContextProvider from './context/MessageContext';
+import { 
+  AuthContextProvider, ProductContextProvider, DetailContextProvider, OrderContextProvider, MessageContextProvider 
+} from './context';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <AuthContextProvider>
     <ProductContextProvider>
-      <MessageContextProvider>
-        <GlobalStyle>
-          <React.StrictMode>
-            <App />
-          </React.StrictMode>
-        </GlobalStyle>
-      </MessageContextProvider>
+      <DetailContextProvider>
+        <OrderContextProvider>
+          <MessageContextProvider>
+            <GlobalStyle>
+              <React.StrictMode>
+                <App />
+              </React.StrictMode>
+            </GlobalStyle>
+          </MessageContextProvider>
+        </OrderContextProvider>
+      </DetailContextProvider>
     </ProductContextProvider>
   </AuthContextProvider>
 );

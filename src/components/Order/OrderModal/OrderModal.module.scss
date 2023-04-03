@@ -1,0 +1,8 @@
+
+.btnOrder {
+    border: solid 1px var(--bs-green);
+    &:hover {
+        border: solid 1px var(--bs-red);
+        background-color: #fff;
+    }
+}

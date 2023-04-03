@@ -30,7 +30,7 @@ const productReducer = (state, action) => {
              
             return {
                 ...state,
-                products: [ payload,...state.products],
+                products: [payload,...state.products],
                
             }
         case  DELETE_PRODUCT_SUCCESS:

@@ -1,13 +1,5 @@
-import Home from '../views/Home'
-import Auth from '../views/Auth'
-import Products from '../views/Products'
-import ProductDetail from '../views/ProductDetail'
-import Search from '../views/Search';
-import UserInfor from '../views/UserInfor';
-import Cart from '../views/Cart';
-
+import { Home, Auth, Products, ProductDetail, Search, UserInfor, Cart, Order, Payment, Address } from '../views'
 import { AdminProducts, AdminUsers, AdminOrders, AdminGrossing } from '../views/Admin';
-import { Address } from '../views';
 import AddressForm from '../components/Address/AddressForm';
 
 
@@ -23,9 +15,10 @@ const publicRoutes = [
 // Private router - login with user
 const privateRoutes = [
     { path: '/profile', component:<UserInfor />},
+    { path: '/profile/payment', component: <Payment /> },
     { path: '/address', component:<Address />},
     { path: '/address/create', component:<AddressForm />},
-    { path: '/orders/:userId', component: Home },
+    { path: '/orders', component: <Order /> },
     { path: '/cart', component: <Cart /> },
 ]
 

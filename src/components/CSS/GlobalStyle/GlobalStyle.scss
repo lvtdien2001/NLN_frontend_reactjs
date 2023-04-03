@@ -6,11 +6,11 @@
     --white: #fff;
     --dangerous: #d63031;
     --info: #0984e3;
+    --success :#27ae60;
 }
 
 body {
     background: var(--background--primary);
-    // background-color: #dbe6e6;
 }
 
 .dropdown-item.active, .dropdown-item:active {

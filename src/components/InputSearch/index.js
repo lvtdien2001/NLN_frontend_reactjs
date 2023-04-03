@@ -15,7 +15,7 @@ function InputSearch() {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (valueSearch.length > 0){
-            navigate(`/search?q=${valueSearch}`);
+            navigate(`/search/${valueSearch}`);
             setValueSearch('');
         }
     }

@@ -1,10 +1,12 @@
-import { useReducer, useEffect } from 'react';
-import { Row, Col, Button } from 'react-bootstrap';
+import { useReducer, useEffect, useContext } from 'react';
+import { Row, Col } from 'react-bootstrap';
 import { FaTrash } from 'react-icons/fa';
 import classNames from 'classnames/bind';
 
+import { MessageContext } from "../../../context/MessageContext";
 import request from '../../../utils/request';
 import cartReducer, { initCartState } from '../../../reducers/cartReducer';
+import OrderModal from '../../Order/OrderModal';
 import { 
     ADD_PRODUCT, REMOVE_PRODUCT, ADD_ALL_PRODUCT, REMOVE_ALL_PRODUCT, SET_TOTAL_AMOUNT, SET_PRODUCT_UPDATE
 } from '../../../context/constanst';
@@ -15,7 +17,7 @@ const cx=classNames.bind(styles);
 
 const CartDetailInfo = ({ data }) =>{
     const [cartState, dispatch] = useReducer(cartReducer, initCartState);
-
+    const { setShowToast, setInforMessage} = useContext(MessageContext);
     const { totalAmount, products, productUpdate } = cartState;
 
     useEffect(() => {
@@ -23,10 +25,6 @@ const CartDetailInfo = ({ data }) =>{
             const { cartId, quantity } = productUpdate;
             await request
                 .put(`/cart/${cartId}`, { quantity })
-        }
-
-        const fetchApiRemove = async () => {
-
         }
 
         productUpdate && fetchApiUpdate();
@@ -47,7 +45,7 @@ const CartDetailInfo = ({ data }) =>{
             return price;
 
         let priceFormat = [];
-        for (let i=price.length; i>=0; i-=3)
+        for (let i=price.length; i>0; i-=3)
             priceFormat.push(price.substring(i-3, i));
 
         return priceFormat.reverse().join('.');
@@ -105,9 +103,18 @@ const CartDetailInfo = ({ data }) =>{
 
     const handleUpdateQuantity = (operator, product) => {
         const { quantity } = product;
-        if (quantity===1) return;
+
         if (operator==='-'){
-            
+            if (quantity===1){
+                setShowToast(true);
+                setInforMessage({
+                    type:'danger', 
+                    title: 'Giảm số lượng không thành công', 
+                    description:'Số lượng tối thiểu là 1'
+                });
+                return;
+            }
+
             dispatch({
                 type: SET_PRODUCT_UPDATE,
                 payload: {
@@ -128,7 +135,29 @@ const CartDetailInfo = ({ data }) =>{
     }   
 
     const handleRemoveProduct = (cartId) => {
-        // console.log(cartId);
+        const fetchApiRemove = async () => {
+            await request
+                .delete(`/cart/${cartId}`)
+                .then((res) => {
+                    if (res.data.success) {
+
+                        // Config information of message toast
+                        setShowToast(true);
+                        setInforMessage({
+                            type:'success', 
+                            title: 'Thông báo', 
+                            description:'Xóa sản phẩm khỏi giỏ hàng thành công'
+                        });
+
+                        // Remove product in cart
+                        const index = data.findIndex(element => cartId === element.cartId);
+                        data.splice(index, 1);
+
+                    }
+                })
+        }
+
+        fetchApiRemove();
     }
 
     return (
@@ -207,7 +236,7 @@ const CartDetailInfo = ({ data }) =>{
                                         </Col>
                                         <Col>{quantity}</Col>
                                         <Col 
-                                            className={`${cx('btn')}`}
+                                            className={`text-center ${cx('btn')}`}
                                             onClick={() => handleUpdateQuantity('+', product)}
                                         >
                                             +
@@ -221,9 +250,10 @@ const CartDetailInfo = ({ data }) =>{
                         </Col>
                         <Col 
                             className={`text-center ${cx('btnRemove')}`} 
-                            xl={1}><FaTrash
-                            onClick={handleRemoveProduct(cartId)}
-                        /> 
+                            xl={1}
+                            onClick={() => handleRemoveProduct(cartId)}
+                        >
+                                <FaTrash/> 
                             Xóa
                         </Col>
                     </Row>
@@ -246,9 +276,7 @@ const CartDetailInfo = ({ data }) =>{
                 <Col className='text-end'>
                     Tổng thanh toán ({products.length} sản phẩm): {formatPrice(totalAmount.toString())} đ
                     &nbsp;
-                    <Button className={`${cx('btnOrder')}`} variant='light' size='lg'>
-                        Mua hàng
-                    </Button>
+                    <OrderModal totalAmount={totalAmount} products={products} />
                 </Col>
             </Row>
         </div>

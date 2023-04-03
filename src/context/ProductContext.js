@@ -28,7 +28,7 @@ const ProductContextProvider = ({children}) => {
     // Get all product    
     const getProducts = async (currentPage) => {
         try {
-            const response = await axios.get(`${API}/api/product?pageSize=2&page=${currentPage}`)
+            const response = await axios.get(`${API}/api/product?pageSize=12&page=${currentPage}`)
             if (response.data.success) {
                 dispatch({
                     type: PRODUCTS_LOADED_SUCCESS,

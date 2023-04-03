@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import classNames from 'classnames/bind';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 import { Dropdown, DropdownButton } from 'react-bootstrap';
 
 import { AiOutlineUser, AiOutlineFileText, AiOutlineLogout } from 'react-icons/ai';
@@ -23,7 +23,7 @@ const DropdownContent = () => {
     // const handleNavigation = (path) => {
     //     navigate(path);
     // }
-
+    
     const Admin = () => {
         return (
             <>
@@ -69,7 +69,7 @@ const DropdownContent = () => {
                     <FaRegAddressCard /> Quản lý địa chỉ
                 </Dropdown.Item>
             </Link>
-            <Link className={cx('hrefUnderline')} to='#'>
+            <Link className={cx('hrefUnderline')} to='/profile/payment'>
                 <Dropdown.Item as='div'>
                     <MdOutlinePayment /> Tài khoản thanh toán
                 </Dropdown.Item>
