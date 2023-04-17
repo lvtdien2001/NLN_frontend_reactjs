@@ -5,6 +5,7 @@ import CustomSpinner from '../../components/CustomSpinner';
 
 const Cart = () => {
     const [data, setData] = useState([]);
+    const [names, setNames] = useState([]);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -15,6 +16,7 @@ const Cart = () => {
                 .then((res) =>{
                     if (res.data.success){
                         setData(res.data.cart);
+                        setNames(res.data.names);
                         setLoading(false);
                     }
                 })
@@ -24,7 +26,7 @@ const Cart = () => {
     }, [])
     return (
         <>
-            { loading ? <div className='text-center'><CustomSpinner /></div> : <CartDetailInfo data={data} /> }
+            { loading ? <div className='text-center'><CustomSpinner /></div> : <CartDetailInfo data={data} names={names} /> }
         </>
     )
 }

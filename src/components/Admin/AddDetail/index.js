@@ -162,7 +162,7 @@ function AddDetail({product}) {
                         <Form.Label>Size:</Form.Label>
                         <Form.Control 
                             type="password" 
-                            placeholder="Nhập kích cỡ"
+                            placeholder="Nhập lại mật khẩu"
                             name='size'
                             value={size}
                             onChange={handleChangeData}

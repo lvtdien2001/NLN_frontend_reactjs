@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { publicRoutes, adminRoutes, privateRoutes } from './routes';
 import DefaultHeader from "./components/Header/DefaultHeader";
+import Footer from "./components/Footer";
 import ProtectedRoute from "./components/routing/ProtectedRoute";
 import AdminRoute from "./components/routing/AdminRoute";
 import { useContext } from "react";
@@ -43,6 +44,7 @@ function App() {
               )}
             </Routes>
           </main>
+          <Footer />
       </div>
     </Router>
   );

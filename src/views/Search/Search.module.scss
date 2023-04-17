@@ -1,0 +1,36 @@
+.layout {
+    margin: 10px 0;
+}
+.carousel {
+    margin-bottom: 40px;
+}
+.product-name {
+    overflow: hidden;
+    text-align: left;
+}
+.card {
+    max-height: 580px;
+    min-height: 520px;
+}
+.card-image {
+    min-height: 320px;
+    margin-top: 12px ;
+    cursor: pointer;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+    transition: transform linear 0.1s;
+    will-change: transform;
+    &:hover {
+        transform: translateY(-10px);
+       box-shadow: 0 1px 20px 0 rgba(0, 0, 0, 0.05);
+       
+    }
+}
+.layout-btn {
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    padding: 12px;
+}
+.btn-detail {
+    margin-right: 12px;
+}

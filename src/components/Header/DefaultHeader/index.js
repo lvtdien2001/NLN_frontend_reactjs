@@ -6,7 +6,8 @@ import classNames from 'classnames/bind';
 import { Container, Nav, Navbar, Button } from 'react-bootstrap';
 
 // icons
-import { BsFillPhoneFill, BsHeadphones, BsLaptop, BsSmartwatch, BsCart } from 'react-icons/bs';
+import { BsFillPhoneFill, BsLaptop, BsSmartwatch, BsCart } from 'react-icons/bs';
+import { FaTabletAlt } from 'react-icons/fa';
 import { MdDevicesOther, MdOutlineContactSupport } from 'react-icons/md';
 
 import { AuthContext } from '../../../context/AuthContext';
@@ -24,31 +25,31 @@ function DefaultHeader () {
             id: 1,
             title:'Điện thoại',
             icon: <BsFillPhoneFill />,
-            link: '/products'
+            link: '/products/64294f88114ebb28aba2be16'
         },
         {
             id: 2,
             title:'Laptop',
             icon: <BsLaptop />,
-            link: '/products'
+            link: '/products/64295042114ebb28aba2be29'
         },
         {
             id: 3,
-            title:'Âm thanh',
-            icon: <BsHeadphones />,
-            link: '/products',
+            title:'Máy tính bảng',
+            icon: <FaTabletAlt />,
+            link: '/products/642950cf114ebb28aba2be30',
         },
         {
             id: 4,
             title:'Đồng hồ',
             icon: <BsSmartwatch />,
-            link: '/products',
+            link: '/products/64295108114ebb28aba2be37',
         },
         {
             id: 5,
             title:'Phụ kiện',
             icon: <MdDevicesOther />,
-            link: '/products',
+            link: '/products/64299a75b50fdf833156df9b',
         },
 
     ];

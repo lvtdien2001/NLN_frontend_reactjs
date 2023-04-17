@@ -3,13 +3,12 @@ import {createContext, useState} from 'react';
 const OrderContext = createContext();
 
 const OrderContextProvider = ({children}) => {
-    const [ payMethod, setPayMethod ] = useState('Thanh toán trực tuyến');
-    const [ products, setProducts ] = useState([]);
-    const [password, setPassword] = useState('');
+    const [products, setProducts] = useState([]);
+    const [totalAmount, setTotalAmount] = useState(0);
 
     //context data
     const orderContextData = {
-        payMethod, setPayMethod, products, setProducts, password, setPassword
+        products, setProducts, totalAmount, setTotalAmount
     }
 
 

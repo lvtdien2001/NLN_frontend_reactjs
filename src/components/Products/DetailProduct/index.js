@@ -22,19 +22,22 @@ const DetailProduct = ({currentDetail}) => {
         <Card >
             <Card.Img variant="top" src={currentDetail?.image} />
             <Card.Body>
-                <div>
-                    {currentDetail?.size && <><span className={cx('detail-value')}>Size:</span> {currentDetail?.size}</> } 
-                </div>
-                <div>
-                    <span className={cx('detail-value')}> Số lượng hiện tại :</span>  {currentDetail?.quantity}
-                </div>
-                <div>
-                    <span className={cx('detail-value')}>  Giá hiện tại:</span> 
-                    <span className={cx('detail-price')}>{formatPrice(currentDetail?.price.toString())} ₫</span>
-                </div>
-                <div>
-                    <span className={cx('detail-value')}>Màu :</span>  {currentDetail?.color}
-                </div>
+                <Card.Text>
+                    <div>
+                       {currentDetail?.size && <><span className={cx('detail-value')}>Size:</span> {currentDetail?.size}</> } 
+                    </div>
+                    <div>
+                     <span className={cx('detail-value')}> Số lượng hiện tại :</span>  {currentDetail?.quantity}
+                    </div>
+                    <div>
+                      <span className={cx('detail-value')}>  Giá hiện tại:</span> 
+                      <span className={cx('detail-price')}>{formatPrice(currentDetail?.price.toString())} ₫</span>
+                    </div>
+                    <div>
+                      <span className={cx('detail-value')}>Màu :</span>  {currentDetail?.color}
+                    </div>
+                    
+                </Card.Text>
             </Card.Body>
         </Card>
     )

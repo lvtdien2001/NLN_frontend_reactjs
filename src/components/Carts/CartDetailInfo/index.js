@@ -1,9 +1,11 @@
-import { useReducer, useEffect, useContext } from 'react';
-import { Row, Col } from 'react-bootstrap';
+import { useReducer, useEffect, useContext, useState } from 'react';
+import { Row, Col, Tooltip, OverlayTrigger } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import { FaTrash } from 'react-icons/fa';
 import classNames from 'classnames/bind';
 
 import { MessageContext } from "../../../context/MessageContext";
+
 import request from '../../../utils/request';
 import cartReducer, { initCartState } from '../../../reducers/cartReducer';
 import OrderModal from '../../Order/OrderModal';
@@ -15,20 +17,43 @@ import styles from './CartDetailInfo.module.scss';
 
 const cx=classNames.bind(styles);
 
-const CartDetailInfo = ({ data }) =>{
+const CartDetailInfo = ({ data, names }) =>{
     const [cartState, dispatch] = useReducer(cartReducer, initCartState);
+    const [paymentUrl, setPaymentUrl] = useState('');
+
     const { setShowToast, setInforMessage} = useContext(MessageContext);
+
+
     const { totalAmount, products, productUpdate } = cartState;
 
     useEffect(() => {
         const fetchApiUpdate = async () => {
-            const { cartId, quantity } = productUpdate;
+            const { _id, quantity } = productUpdate;
             await request
-                .put(`/cart/${cartId}`, { quantity })
+                .put(`/cart/${_id}`, { quantity })
         }
 
         productUpdate && fetchApiUpdate();
+
     }, [productUpdate])
+
+    useEffect(() => {
+        const fetchApiPayment = async () => {
+            await request
+                .post('/payment', { amount: totalAmount })
+                .then(res => {
+                    if (res.data.success) {
+                        setPaymentUrl(res.data.url);
+                    }
+                })
+        }
+
+        if (totalAmount!==0)
+            fetchApiPayment();
+        else if (totalAmount===0)
+            setPaymentUrl('');
+
+    }, [totalAmount]);
 
     // Format name
     // @desc Format name has length > 28 character
@@ -65,7 +90,7 @@ const CartDetailInfo = ({ data }) =>{
         else {
             const index = products.findIndex(element => {
                 const { cartId } = element;
-                return cartId === product.cartId;
+                return cartId === product._id;
             })
             dispatch({
                 type: REMOVE_PRODUCT,
@@ -122,14 +147,32 @@ const CartDetailInfo = ({ data }) =>{
                     quantity: quantity-1
                 }
             })
+            dispatch({
+                type: SET_TOTAL_AMOUNT,
+                payload: null
+            })
         }
         else if (operator==='+'){
+            const inventoryQuantity = product.detailProduct.quantity;
+            if ( quantity === inventoryQuantity ) {
+                setShowToast(true);
+                setInforMessage({
+                    type:'danger', 
+                    title: 'Cập nhật không thành công', 
+                    description: `Số lượng sản phẩm trong kho chỉ còn ${inventoryQuantity}`
+                });
+                return;
+            }
             dispatch({
                 type: SET_PRODUCT_UPDATE,
                 payload: {
                     ...product,
                     quantity: quantity+1
                 }
+            })
+            dispatch({
+                type: SET_TOTAL_AMOUNT,
+                payload: null
             })
         }
     }   
@@ -169,35 +212,37 @@ const CartDetailInfo = ({ data }) =>{
                 <Col xl={4}>
                     Sản phẩm
                 </Col>
-                <Col xl={6}>
-                    <Row className='text-center'>
+                <Col xl={7}>
+                    <Row className='text-center align-items-center'>
                         <Col xl={4}></Col>
-                        <Col xl={3}>
-                            Đơn giá
+                        <Col xl={7}>
+                            <Row>
+                                <Col xl={4}>Đơn giá</Col>
+                                <Col xl={4}>Số lượng</Col>
+                                <Col xl={4}>Số tiền</Col>
+                            </Row>
+                            
                         </Col>
-                        <Col xl={2}>
-                            Số lượng
-                        </Col>
-                        <Col xl={3}>
-                            Số tiền
-                        </Col>
+
                     </Row>
                 </Col>
-                <Col className='text-center' xl={1}>Thao tác</Col>
+                
             </Row>
     
-            {data.map(product => {
+            {data.map((product, index) => {
                 // Set quantity updated, if any
-                if (productUpdate && product.cartId === productUpdate.cartId){
+                if (productUpdate && product._id === productUpdate._id){
                     product.quantity = productUpdate.quantity
                 }
-                
-                const { cartId, price, color, size, image, name, quantity } = product;
 
+                // const { cartId, name } = product;
+                const { quantity, detailProduct } = product;
+                const { price, color, size, image } = detailProduct;
+           
                 const amount = quantity*price;
 
                 return (
-                    <Row key={cartId} className={`align-items-center ${cx('items')}`}>
+                    <Row key={index} className={`align-items-center ${cx('items')}`}>
 
                         <Col xl={5}>
                             <Row className={`align-items-center ${cx('product')}`}>
@@ -209,13 +254,28 @@ const CartDetailInfo = ({ data }) =>{
                                         checked={products.includes(product)}
                                     />
                                 </Col>
-                                <Col xl={5}><img className={cx('images')} src={image} alt={name} /></Col>
-                                <Col xl={6} className={cx('name')} >
-                                    {formatName(name)}
+                                <Col xl={5}>
+                                    <Link className={cx('link')} to={`/product/${detailProduct.product}`} >
+                                        <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">{names[index]}</Tooltip>}>
+                                            <span className="d-inline-block">
+                                                <img className={cx('images')} src={image} alt={names[index]} />
+                                            </span>
+                                        </OverlayTrigger>
+                                    </Link>
                                 </Col>
+                                <Col xl={6} >
+                                    <Link to={`/product/${detailProduct.product}`} >
+                                        <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">{names[index]}</Tooltip>}>
+                                            <span className={`d-inline-block ${cx('name')}`}>
+                                                {formatName(names[index])}
+                                            </span>
+                                        </OverlayTrigger>
+                                    </Link>
+                                </Col>
+                                
                             </Row>
                         </Col>
-                        <Col xl={6}>
+                        <Col xl={7}>
                             <Row className={`align-items-center text-center`}>
                                 <Col xl={2}>
                                     { color && <>Màu sắc: {color}</> } 
@@ -223,39 +283,44 @@ const CartDetailInfo = ({ data }) =>{
                                 <Col xl={2}>
                                     { size }
                                 </Col>
-                                <Col xl={3}>
-                                    {formatPrice(price.toString())} đ
-                                </Col>
-                                <Col xl={2}>
-                                    <Row className={`align-items-center text-center ${cx('quantity')}`}>
-                                        <Col 
-                                            className={`${cx('btn')}`}
-                                            onClick={() => handleUpdateQuantity('-', product)}
-                                        >
-                                            -
+                                <Col xl={7}>
+                                    <Row>
+                                        <Col xl={4}>
+                                            {formatPrice(price.toString())} đ
                                         </Col>
-                                        <Col>{quantity}</Col>
-                                        <Col 
-                                            className={`text-center ${cx('btn')}`}
-                                            onClick={() => handleUpdateQuantity('+', product)}
-                                        >
-                                            +
+                                        <Col xl={4}>
+                                            <Row className={`align-items-center text-center ${cx('quantity')}`}>
+                                                <Col
+                                                    className={`${cx('btn')}`}
+                                                    onClick={() => handleUpdateQuantity('-', product)}
+                                                >
+                                                    -
+                                                </Col>
+                                                <Col>{quantity}</Col>
+                                                <Col
+                                                    className={`text-center ${cx('btn')}`}
+                                                    onClick={() => handleUpdateQuantity('+', product)}
+                                                >
+                                                    +
+                                                </Col>
+                                            </Row>
+                                        </Col>
+                                        <Col xl={4} >
+                                            {formatPrice(amount.toString())} đ
                                         </Col>
                                     </Row>
                                 </Col>
-                                <Col xl={3} >
-                                    {formatPrice(amount.toString())} đ
+                                <Col 
+                                    className={`text-center ${cx('btnRemove')}`} 
+                                    xl={1}
+                                    onClick={() => handleRemoveProduct(product._id)}
+                                >
+                                    <FaTrash/> 
+                                    Xóa
                                 </Col>
                             </Row>
                         </Col>
-                        <Col 
-                            className={`text-center ${cx('btnRemove')}`} 
-                            xl={1}
-                            onClick={() => handleRemoveProduct(cartId)}
-                        >
-                                <FaTrash/> 
-                            Xóa
-                        </Col>
+                       
                     </Row>
                 )
             })}
@@ -276,7 +341,14 @@ const CartDetailInfo = ({ data }) =>{
                 <Col className='text-end'>
                     Tổng thanh toán ({products.length} sản phẩm): {formatPrice(totalAmount.toString())} đ
                     &nbsp;
-                    <OrderModal totalAmount={totalAmount} products={products} />
+                    {/* <Button 
+                        className={`${cx('btnOrder')}`} 
+                        variant='light' 
+                        size='lg'
+                    >
+                        <a className={cx('hrefUnderline')} href={`${paymentUrl}`}>Mua hàng</a>
+                    </Button> */}
+                    <OrderModal paymentUrl={paymentUrl} totalAmount={totalAmount} products={products} ></OrderModal>
                 </Col>
             </Row>
         </div>

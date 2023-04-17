@@ -9,22 +9,20 @@ import { Link } from 'react-router-dom';
 const cx = classNames.bind(styles);
 
 function ProductCategories() {
-    const [category, setCategory] = useState([]);
+    const [categories, setCategories] = useState([]);
 
     useEffect(() => {
-            const getCategory = async () => {
+            const getCategories = async () => {
                 const res = await axios.get(`${API}/api/category`);
                 if (res.data.success) {
-                    setCategory(res.data.allCategory)
+                    setCategories(res.data.allCategory)
                 }
             }
-            getCategory()
+            getCategories()
     }, [])
-
-
     
-    const categoryLists = category.map((category) => (
-        <Link  key={category._id} className={cx('link')} to={`/${category.category}`}>
+    const categoryLists = categories.map((category) => (
+        <Link  key={category._id} className={cx('link')} to={`/products/${category._id}`}>
             <div className={cx('category-item')}>
                 <img className={cx('category-image')} src={category.image} alt="img" width='80px' height='80px' />
                 <div className={cx('category-name')}>{category.category}</div>

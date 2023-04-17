@@ -34,3 +34,7 @@ export const ADD_ALL_PRODUCT = 'ADD_ALL_PRODUCT';
 export const REMOVE_ALL_PRODUCT = 'ADD_ALL_PRODUCT';
 export const SET_TOTAL_AMOUNT = 'TOTAL_AMOUNT';
 export const SET_PRODUCT_UPDATE = 'PRODUCT_UPDATE';
+
+// ORDER
+export const LOCAL_STORAGE_TOTAL_AMOUNT = 'totalAmount';
+export const LOCAL_STORAGE_PRODUCTS = 'products';

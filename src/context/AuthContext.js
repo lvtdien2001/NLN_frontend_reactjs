@@ -135,9 +135,9 @@ const AuthContextProvider = ({children}) => {
         }
     }
 
-    const updateImage = async (updateUserForm, id) => {
+    const updateImage = async (updateUserForm) => {
         try {
-            const response = await axios.put(`${API}/auth/image/${id}`, updateUserForm);
+            const response = await axios.put(`${API}/api/auth/image/avatar`, updateUserForm);
             if (response.data.success) {
                 dispatch({
                     type:UPDATE_USER_IMAGE,

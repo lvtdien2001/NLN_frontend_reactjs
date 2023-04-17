@@ -33,7 +33,7 @@ function ModalCart({allDetail}){
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-           await request.post(`/cart/${currentDetail._id}`, data)
+           await request.post(`/carts/${currentDetail._id}`, data)
                     .then((res) => {
                         if(res.data.success) {
                             setShowToast(true);

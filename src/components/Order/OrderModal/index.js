@@ -1,23 +1,22 @@
 import { useState, useContext } from 'react';
-import { Button, Modal, Form } from 'react-bootstrap';
+import { Button, Modal, Form, Row, Col } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import classNames from 'classnames/bind';
 
 import request from '../../../utils/request';
 import { MessageContext } from "../../../context/MessageContext";
-import { OrderContext } from '../../../context/OrderContext';
 import { AuthContext } from '../../../context/AuthContext';
-import OrderDetail from '../OrderDetail'
 import styles from './OrderModal.module.scss';
 
 const cx = classNames.bind(styles);
 
-const OrderModal = ({totalAmount, products}) => {
-    
+const OrderModal = ({totalAmount, paymentUrl, products}) => {
+    const [payMethod, setPayMethod] = useState('');
     const [show, setShow] = useState(false);
-    const [showPayment, setShowPayment] = useState(false);
     const { setShowToast, setInforMessage} = useContext(MessageContext);
     const { authState: {user} } = useContext(AuthContext);
-    const { payMethod, password, setPassword } = useContext(OrderContext);
+
+    const navigate = useNavigate();
 
     const { phoneNumber, fullName, province, district, ward, description } = user.address
 
@@ -36,27 +35,22 @@ const OrderModal = ({totalAmount, products}) => {
         }
     }
 
-    const handleOrder = async () => {
+    const handlePayment = async () => {
         if (payMethod==='Thanh toán trực tuyến'){
-            setShow(false);
-            setShowPayment(true);
-            setPassword('');
-        }
-        else if (payMethod==='Thanh toán khi nhận hàng'){
             let details = [];
             products.forEach(product => {
-                const { detailProductId, quantity, price } = product;
+                const { detailProduct, quantity } = product;
                 details.push({
-                    detail: detailProductId,
-                    price,
+                    detail: detailProduct._id,
+                    price: detailProduct.price,
                     quantity
                 })
             })
-            
             await request
                 .post('/order', {
-                    payMethod,
                     products: details,
+                    totalAmount,
+                    paymentMethod: payMethod,
                     phoneNumber,
                     fullName,
                     province,
@@ -64,146 +58,120 @@ const OrderModal = ({totalAmount, products}) => {
                     ward,
                     description
                 })
-                .then((res) => {
-                    console.log(res.data);
+                .then(res => localStorage.setItem('orderId', res.data.bill._id))
+            for (let i=0; i<products.length; i++){
+                await request.delete(`/cart/${products[i]._id}`)
+            }
+            window.location.href = paymentUrl;
+        }
+        else if (payMethod==='Thanh toán khi nhận hàng'){
+            let details = [];
+            let orderId;
+            products.forEach(product => {
+                const { detailProduct, quantity } = product;
+                details.push({
+                    detail: detailProduct._id,
+                    price: detailProduct.price,
+                    quantity
                 })
+            })
+            await request
+                .post('/order', {
+                    products: details,
+                    totalAmount,
+                    paymentMethod: payMethod,
+                    phoneNumber,
+                    fullName,
+                    province,
+                    district,
+                    ward,
+                    description
+                })
+                .then(res => {
+                    orderId = res.data.bill._id
+                })
+            for (let i=0; i<products.length; i++){
+                await request.delete(`/cart/${products[i]._id}`)
+            }
+            navigate(`/order/${orderId}`);
+        }
+        else{
             setShowToast(true);
             setInforMessage({
-                type:'success', 
-                title: 'Thông báo', 
-                description:'Đặt hàng thành công'
+                type:'danger', 
+                title: 'Lỗi rồi!!', 
+                description:'Bạn chưa chọn phương thức thanh toán'
             });
-            setShow(false);
         }
-        else console.log(payMethod)
     }
 
-    const handlePayment = async () => {
-        let details = [];
-        products.forEach(product => {
-            const { detailProductId, quantity, price } = product;
-            details.push({
-                detail: detailProductId,
-                price,
-                quantity
-            })
-        })
-
-        let successPayment = false;
-        await request
-            .put('/payment/money', {
-                money: totalAmount,
-                password
-            })
-            .then((res) => {
-                
-                    setShowToast(true);
-                    setInforMessage({
-                        type:'danger', 
-                        title: 'Thanh toán thất bại', 
-                        description:'Mậu khẩu ví không chính xác'
-                    });
-                
-                successPayment = res.data.success
-            })
-
-        if (successPayment){
-            await request
-                .post('/order', {
-                    payMethod,
-                    isPayment: true,
-                    products: details,
-                    phoneNumber,
-                    fullName,
-                    province,
-                    district,
-                    ward,
-                    description
-                })
-                .then((res) => {
-                    console.log(res.data);
-                })
-            setShowToast(true);
-            setInforMessage({
-                type:'success', 
-                title: 'Thông báo', 
-                description:'Đặt hàng thành công'
-            });
-            setShowPayment(false);
-        }
-        await request
-            .post('/order', {
-                payMethod,
-                isPayment: true,
-                products: details,
-                phoneNumber,
-                fullName,
-                province,
-                district,
-                ward,
-                description
-            })
-            .then((res) => {
-                console.log(res.data);
-            })
-            setShowToast(true);
-            setInforMessage({
-                type:'success', 
-                title: 'Thông báo', 
-                description:'Đặt hàng thành công'
-            });
-            setShow(false);
+    const ModalPaymentMethod = () => {
+        return (
+            <>
+                <Button
+                    className={`${cx('btnOrder')}`}
+                    variant='light'
+                    size='lg'
+                    onClick={handleShow}
+                >
+                    Mua hàng
+                </Button>
+                <Modal
+                    show={show}
+                    onHide={handleClose}
+                    fullscreen='sm-down'
+                    scrollable
+                    onEnter={checkOrder}
+                >
+                    <Modal.Header closeButton>
+                        <Modal.Title>Chọn phương thức thanh toán</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form onChange={(e) =>setPayMethod(e.target.value)} >
+                            <Row>
+                                <Col>
+                                    <Form.Check type='radio' id='inline-radio-1'>
+                                        <Form.Check.Input
+                                            defaultChecked={payMethod==='Thanh toán trực tuyến'}
+                                            value='Thanh toán trực tuyến'
+                                            name='payMethod'
+                                            type='radio'
+                                        />
+                                        <Form.Check.Label>Thanh toán trực tuyến</Form.Check.Label>
+                                    </Form.Check>
+                                </Col>
+                                <Col>
+                                    <Form.Check type='radio' id='inline-radio-2'>
+                                        <Form.Check.Input
+                                            defaultChecked={payMethod==='Thanh toán khi nhận hàng'}
+                                            value='Thanh toán khi nhận hàng'
+                                            name='payMethod'
+                                            type='radio'
+                                        />
+                                        <Form.Check.Label>Thanh toán khi nhận hàng</Form.Check.Label>
+                                    </Form.Check>
+                                </Col>
+                            </Row>
+                        </Form>
+                    </Modal.Body>
+                    <Modal.Footer className='justify-content-center'>
+                        <Button
+                            className={`${cx('btnOrder')}`}
+                            variant="light"
+                            onClick={handlePayment}
+                            size='lg'
+                        >
+                            Xác nhận
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+            </>
+        )
     }
 
     return (
         <>
-            <Button 
-                className={`${cx('btnOrder')}`} 
-                variant='light' 
-                size='lg'
-                onClick={handleShow}
-            >
-                Mua hàng
-            </Button>
-
-            <Modal 
-                show={show} 
-                onHide={handleClose} 
-                fullscreen='sm-down' 
-                scrollable size='lg' 
-                onEnter={checkOrder}
-            >
-                <Modal.Body>
-                    <OrderDetail inforUser={user.address} totalAmount={totalAmount} products={products} />
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Đóng
-                    </Button>
-                    <Button className={`${cx('btnOrder')}`} variant="light" onClick={handleOrder}>
-                        Đặt hàng
-                    </Button>
-                </Modal.Footer>
-            </Modal>
-
-            <Modal 
-                show={showPayment} 
-                onHide={() => setShowPayment(false)} 
-                fullscreen='sm-down' 
-                scrollable
-            >
-                <Modal.Header closeButton>
-                    <Modal.Title>Nhập mật khẩu ví của bạn</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Form.Control autoFocus value={password} onChange={(e) => setPassword(e.target.value)} type="password"></Form.Control>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="primary" onClick={handlePayment}>
-                        Gửi
-                    </Button>
-                </Modal.Footer>
-            </Modal>
+            <ModalPaymentMethod />
         </>
     );
 }

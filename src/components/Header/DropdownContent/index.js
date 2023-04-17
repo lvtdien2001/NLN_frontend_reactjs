@@ -69,14 +69,14 @@ const DropdownContent = () => {
                     <FaRegAddressCard /> Quản lý địa chỉ
                 </Dropdown.Item>
             </Link>
-            <Link className={cx('hrefUnderline')} to='/profile/payment'>
+            {/* <Link className={cx('hrefUnderline')} to='/profile/payment'>
                 <Dropdown.Item as='div'>
                     <MdOutlinePayment /> Tài khoản thanh toán
                 </Dropdown.Item>
-            </Link>
-            <Link className={cx('hrefUnderline')} to='#'>
+            </Link> */}
+            <Link className={cx('hrefUnderline')} to='/orders'>
                 <Dropdown.Item as='div'>
-                    <AiOutlineFileText /> Lịch sử giao dịch
+                    <AiOutlineFileText /> Đơn hàng
                 </Dropdown.Item>
             </Link>
 

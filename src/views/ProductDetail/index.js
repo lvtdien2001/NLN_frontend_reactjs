@@ -15,6 +15,8 @@ import axios from "axios";
 import CustomSpinner from "../../components/CustomSpinner";
 import DetailProduct from "../../components/Products/DetailProduct";
 import ModalCart from "../../components/Carts/ModalCart";
+import Comment from "../../components/Comments/CommentForm";
+
 
 const cx = classNames.bind(styles)
 function ProductDetail() {
@@ -63,6 +65,7 @@ function ProductDetail() {
                    {loading ? <CustomSpinner /> :  <DetailProduct currentDetail={currentDetail} />}
                   <div className={cx('detail')}>{detail}</div> 
                   <ModalCart allDetail={allDetail} />
+                  <Comment productId={id} />
                 </Col> 
             </Row>
            

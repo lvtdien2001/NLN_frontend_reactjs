@@ -1,38 +1,41 @@
-import React, { useContext, useEffect } from 'react'
-
+import React, { useEffect, useState } from 'react'
 import classNames from 'classnames/bind';
 import styles from './Products.module.scss';
 import GetAllProducts from '../../components/Products/GetAllProducts';
-import { ProductContext } from '../../context/ProductContext';
-
-import { Col, Container, Row } from 'react-bootstrap';
-import PaginationPage from '../../components/Pagination';
+import request from '../../utils/request';
 import CustomSpinner from '../../components/CustomSpinner';
+import { useParams } from 'react-router-dom';
 
 const cx = classNames.bind(styles)
 
 function Products() {
-   const {getProducts, pageNumber, productState: {products, productsLoading}} = useContext(ProductContext)
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(false);
+
+    // useEffect(() => {
+    //     getProducts(pageNumber)
+    // },[pageNumber])
+
+    const {category} = useParams();
 
     useEffect(() => {
-        getProducts(pageNumber)
-    },[pageNumber])
+        const fetchApi = async () => {
+            setLoading(true);
+            await request
+                .get(`/product/detail/category/${category}`)
+                .then(res => {
+                    if (res.data.success){
+                        setProducts(res.data.result);
+                        setLoading(false);
+                    }
+                })
+        }
+        fetchApi()
+    }, [category])
+
   return (
     <div className={cx('')}>
-        <div>
-            layout danh muc san pham
-        </div>
-        {productsLoading ? <CustomSpinner /> : <GetAllProducts listProducts={products} />}
-        
-        <Container>
-            <Row className="justify-content-md-center">
-                <Col md={{ span: 6, offset: 3 }}>
-
-                    <PaginationPage />
-                </Col>
-                   
-            </Row>
-        </Container>
+        {loading ? <CustomSpinner /> : <GetAllProducts listProducts={products} />}
  
     </div>
   )

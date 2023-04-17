@@ -16,13 +16,22 @@ function ProductSuggest() {
             await request('/product/detail/suggest/latest')
             .then((res) => {
                 if(res.data.success) {
-                    setSuggestProducts(res.data.suggestProduct)
+                    setSuggestProducts(res.data.suggestProducts)
                 }
             })
         }
         getSuggestProduct()
     }, [])
     
+    // Format name
+    // @desc Format name has length > 30 character
+    // Ex: Dien thoai Samsung Galaxy S23 -> Dien thoai Samsung Gala...
+    const formatName = name => {
+        if (name.length <= 30)
+            return name;
+        return name.substring(0, 31) + '...'
+    }
+
     const formatPrice = price => {
         if (price.length <= 3)
             return price;
@@ -37,12 +46,12 @@ function ProductSuggest() {
     const body = suggestProducts.map((item) => (
             
             <Card key={item?._id} className={cx('card')}>
-                 <Link to={`/product/${item.product}`} style={{textDecoration:'none'}} >
+                 <Link to={`/product/${item.product._id}`} style={{textDecoration:'none'}} >
                     <Card.Img variant="top" className={cx('card-image')} src={item?.image} />
                     <Card.Body>
-                        <Card.Title>{item?.name}</Card.Title>
-                        <Card.Text>{console.log(item)}
-                            <b className='text-danger'>{formatPrice(item?.price.toString())}đ</b><br/>
+                        <Card.Title style={{height: '48px'}} >{formatName(item.product?.name)}</Card.Title>
+                        <Card.Text>
+                            <b className='text-danger'>{formatPrice(item?.price.toString())} đ</b><br/>
                         </Card.Text>
                     </Card.Body>
                 </Link>

@@ -3,16 +3,11 @@
 }
 
 .items, .title, .order {
-    margin: 20px 0px;
+    margin: 10px 0px;
     padding: 10px;
     border: solid 1px #b9b5b5;
     border-radius: 20px;
-}
-
-.product {
-    &:hover {
-        cursor: pointer;
-    }
+    background-color: #fff;
 }
 
 .title {
@@ -29,11 +24,23 @@
     font-weight: 400;
     font-size: 18px;
     margin-top: 10px;
+    color: #333;
+    &:hover {
+        cursor: pointer;
+        color: var(--bs-blue);
+        font-weight: 500;
+    }
 }
 
 .images {
     width: 200px;
+    height: 133.25px;
     border-radius: 5px;
+    &:hover {
+        cursor: pointer;
+        transform: translateY(-10px);
+        box-shadow: 0 1px 20px 0 rgba(0, 0, 0, 0.05);
+    }
 }
 
 .quantity {
@@ -58,4 +65,9 @@
 
 .order {
     font-size: 20px;
+}
+
+.hrefUnderline {
+    text-decoration: none;
+    color: #333;
 }

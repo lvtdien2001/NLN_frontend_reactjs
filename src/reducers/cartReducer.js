@@ -38,9 +38,11 @@ const cartReducer = (state, action) => {
             }
         case SET_TOTAL_AMOUNT:
             let amounts = state.products.map(product => {
-                const {quantity, price} = product;
+                const {quantity} = product;
+                const {price} = product.detailProduct;
                 return quantity*price;
             })
+ 
             let totalAmount = 0;
             for (let i=0; i<amounts.length; i++)
                 totalAmount += amounts[i];
