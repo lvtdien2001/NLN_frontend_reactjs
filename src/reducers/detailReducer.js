@@ -2,7 +2,8 @@ import {
     DETAILS_LOADED_FAIL,
     DETAILS_LOADED_SUCCESS,
      CREATE_DETAIL_SUCCESS, 
-     DELETE_DETAIL_SUCCESS
+     DELETE_DETAIL_SUCCESS,
+     UPDATE_DETAIL_SUCCESS
     
  } from '../context/constanst';
  
@@ -41,6 +42,14 @@ import {
                  ...state,
                  detailProducts: state.detailProducts.filter(detail => detail._id !== payload),
              }
+        case  UPDATE_DETAIL_SUCCESS:
+                //  const newPost = state.products;
+                //  newPost.filter(post => post._id !== payload  )
+            console.log(payload)
+            return {
+                ...state,
+                detailProducts: state.detailProducts.map(detail => detail._id === payload._id ? payload : detail),
+            }    
         
          default:
              return state

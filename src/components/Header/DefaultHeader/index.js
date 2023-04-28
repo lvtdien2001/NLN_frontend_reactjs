@@ -88,11 +88,11 @@ function DefaultHeader () {
                 </div>
                 <div className={`col-sm-6 col-xl-4 ${cx('rightHeader')}`}>
                     <div className={`d-flex justify-content-end ${cx('alignCenter')}`} >
-                        <Link to='/support' className={cx('hrefUnderline')}>
+                        {/* <Link to='/support' className={cx('hrefUnderline')}>
                             <Button className={cx('support', 'contentCenter')} variant='light'>
                                 <MdOutlineContactSupport /> Hỗ trợ
                             </Button>
-                        </Link>
+                        </Link> */}
                         <Link className={cx('hrefUnderline')} to='/cart'>
                             <Button className={cx('cart', 'contentCenter')} variant='light'>
                                 <BsCart /> Giỏ hàng

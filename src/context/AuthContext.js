@@ -19,14 +19,6 @@ const AuthContextProvider = ({children}) => {
     const [showModalUpdateUser, setShowModalUpdateUser] = useState(false);
     const [showUpdateAvatar, setShowUpdateAvatar] = useState(false);
    
-    // // message Toast
-    // const [inforMessage, setInforMessage] = useState({
-    //     title: '',
-    //     description: '',
-    //     type: ''
-    // });
-    // // show toast
-    // const [showToast, setShowToast] = useState(false);
     // Check Authenticate user
     const loadUser = async () => {
         if(localStorage[LOCAL_STORAGE_TOKEN_NAME]) {
@@ -169,7 +161,7 @@ const AuthContextProvider = ({children}) => {
                         newAddress: response.data.newAddress
                     }
                 })
-               return {success: true, message: response.data.message}
+               return {success: true, message: response.data.message, id: response.data.newAddress._id}
 
             }
 

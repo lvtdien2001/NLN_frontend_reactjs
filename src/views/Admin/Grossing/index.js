@@ -1,8 +1,13 @@
 import React from 'react'
+import ChartMonth from '../../../components/Chart/ChartMonth'
 
 const AdminGrossing = () => {
+  
   return (
-    <div>AdminGrossing</div>
+    <div>
+     
+      <ChartMonth />
+    </div>
   )
 }
 

@@ -18,7 +18,13 @@ const OrderModal = ({totalAmount, paymentUrl, products}) => {
 
     const navigate = useNavigate();
 
-    const { phoneNumber, fullName, province, district, ward, description } = user.address
+    // const { phoneNumber, fullName, province, district, ward, description } = user.address
+    const phoneNumber = user.address?.phoneNumber;
+    const fullName = user.address?.fullName;
+    const province = user.address?.province;
+    const district = user.address?.district;
+    const ward = user.address?.ward;
+    const description = user.address?.description;
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -36,35 +42,48 @@ const OrderModal = ({totalAmount, paymentUrl, products}) => {
     }
 
     const handlePayment = async () => {
-        if (payMethod==='Thanh toán trực tuyến'){
-            let details = [];
-            products.forEach(product => {
-                const { detailProduct, quantity } = product;
-                details.push({
-                    detail: detailProduct._id,
-                    price: detailProduct.price,
-                    quantity
-                })
-            })
-            await request
-                .post('/order', {
-                    products: details,
-                    totalAmount,
-                    paymentMethod: payMethod,
-                    phoneNumber,
-                    fullName,
-                    province,
-                    district,
-                    ward,
-                    description
-                })
-                .then(res => localStorage.setItem('orderId', res.data.bill._id))
-            for (let i=0; i<products.length; i++){
-                await request.delete(`/cart/${products[i]._id}`)
-            }
+        if (payMethod==='Thanh toán trực tuyến' && user.address!==undefined){
+            // let details = [];
+            // products.forEach(product => {
+            //     const { detailProduct, quantity } = product;
+            //     details.push({
+            //         detail: detailProduct._id,
+            //         price: detailProduct.price,
+            //         quantity
+            //     })
+            // })
+            // await request
+            //     .post('/order', {
+            //         products: details,
+            //         totalAmount,
+            //         paymentMethod: payMethod,
+            //         phoneNumber,
+            //         fullName,
+            //         province,
+            //         district,
+            //         ward,
+            //         description
+            //     })
+            //     .then(res => {
+            //         if (res.data.success){
+            //             localStorage.setItem('orderId', res.data.bill._id);
+            //             
+            //         }
+            //     })
+
+            localStorage.setItem('products', JSON.stringify(products));
+            localStorage.setItem('totalAmount', totalAmount);
+            localStorage.setItem('paymentMethod', payMethod);
+            localStorage.setItem('phoneNumber', phoneNumber);
+            localStorage.setItem('fullName', fullName);
+            localStorage.setItem('province', province);
+            localStorage.setItem('district', district);
+            localStorage.setItem('ward', ward);
+            localStorage.setItem('description', description);
+
             window.location.href = paymentUrl;
         }
-        else if (payMethod==='Thanh toán khi nhận hàng'){
+        else if (payMethod==='Thanh toán khi nhận hàng' && user.address!==undefined){
             let details = [];
             let orderId;
             products.forEach(product => {
@@ -94,6 +113,14 @@ const OrderModal = ({totalAmount, paymentUrl, products}) => {
                 await request.delete(`/cart/${products[i]._id}`)
             }
             navigate(`/order/${orderId}`);
+        }
+        else if (user.address===undefined){
+            setShowToast(true);
+            setInforMessage({
+                type:'danger', 
+                title: 'Lỗi rồi!!', 
+                description:'Bạn chưa cập nhật địa chỉ nhận hàng'
+            });
         }
         else{
             setShowToast(true);

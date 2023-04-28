@@ -1,11 +1,13 @@
 import { Row, Col } from 'react-bootstrap';
 import classNames from 'classnames/bind';
+import moment from 'moment';
+import 'moment/locale/vi';
 
-import styles from './OrderInfor.module.scss';
+import styles from './OrderPrintPDF.module.scss';
 
 const cx=classNames.bind(styles)
 
-const OrderInfor = ({ order }) => {
+const OrderPrintPDF = ({ order }) => {
     // Format price - Ex: 1000000 --> 1.000.000
     const formatPrice = price => {
         if (price.length <= 3)
@@ -29,8 +31,8 @@ const OrderInfor = ({ order }) => {
         
             
                 <b>Mã đơn hàng:</b> {order._id}<br/>
-                <b>Thời gian đặt hàng:</b> {order.createdAt}<br/>
-                {order.isPayment && <><b>Thời gian thanh toán:</b> {order.createdAt}</>}<br/>
+                <b>Thời gian đặt hàng:</b> {moment(order.createdAt).format('llll')}<br/>
+                {/* {order.isPayment && <><b>Thời gian thanh toán:</b> {order.createdAt}</>}<br/> */}
                 <b>Khách hàng:</b> {order.fullName}<br/>
                 <b>Số điện thoại:</b> {order.phoneNumber}<br/>
                 <b>Địa chỉ giao hàng:</b> {`${order.description}, ${order.ward}, ${order.district}, ${order.province}`} 
@@ -75,16 +77,37 @@ const OrderInfor = ({ order }) => {
         )
     }
 
+    const Signature = () => {
+        return (
+            <Row style={{marginTop: '10px'}} className='text-center'>
+                <Col>
+                    <b>Người nhận</b>
+                    <p>(Ký tên)</p>
+                </Col>
+                <Col>
+                    <b>Người giao hàng</b>
+                    <p>(Ký tên)</p>
+                </Col>
+                <Col>
+                    <b>Người tạo hóa đơn</b>
+                    <p>(Ký tên)</p>
+                </Col>
+                <div style={{height: '100px'}}></div>
+            </Row>
+        )
+    }
+
     return (
         order && 
         <Row className={`justify-content-center`}>  
             <Col className={`${cx('wrapper')}`} xl={9}>
                 <Heading />
                 <Body />
+                <Signature />
             </Col>
         </Row>
     )
 }
 
-export default OrderInfor
+export default OrderPrintPDF
 

@@ -41,6 +41,9 @@ function Login(){
                 setShowToast(true);
                 setInforMessage({type:'success', title: 'Đăng nhập', description:'bạn đã đăng nhập thành công !!'})
                 
+            }else {
+                setShowToast(true);
+                setInforMessage({type:'danger', title: 'Đăng nhập', description: response.message})
             }
         } catch (error) {
             console.log(error)

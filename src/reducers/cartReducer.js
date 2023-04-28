@@ -40,12 +40,14 @@ const cartReducer = (state, action) => {
             let amounts = state.products.map(product => {
                 const {quantity} = product;
                 const {price} = product.detailProduct;
+                
                 return quantity*price;
             })
  
             let totalAmount = 0;
             for (let i=0; i<amounts.length; i++)
                 totalAmount += amounts[i];
+            
             return {
                 ...state,
                 totalAmount

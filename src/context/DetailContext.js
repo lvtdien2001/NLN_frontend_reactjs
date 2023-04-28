@@ -8,7 +8,8 @@ import axios from 'axios';
 
 //const type
 import { 
-    DETAILS_LOADED_FAIL, DETAILS_LOADED_SUCCESS, CREATE_DETAIL_SUCCESS, DELETE_DETAIL_SUCCESS
+    DETAILS_LOADED_FAIL, DETAILS_LOADED_SUCCESS, CREATE_DETAIL_SUCCESS, DELETE_DETAIL_SUCCESS,
+    UPDATE_DETAIL_SUCCESS
 } from './constanst';
 
 export const  DetailContext = createContext();
@@ -56,13 +57,13 @@ const DetailContextProvider = ({children}) => {
         }
     }
     // Delete a post
-    const deleteDetail = async postId => {
+    const deleteDetail = async id => {
         try {
-            const response = await axios.delete(`${API}/api/posts/${postId}`)
+            const response = await axios.delete(`${API}/api/product/detail/${id}`)
             if (response.data.success) {
                 dispatch({
                     type: DELETE_DETAIL_SUCCESS,
-                    payload: postId
+                    payload: id
                 })
                 return response.data
             }
@@ -71,7 +72,22 @@ const DetailContextProvider = ({children}) => {
         }
        
     }
-   
+    // Delete a post
+    const updateDetail = async (data, id) => {
+        try {
+            const response = await axios.put(`${API}/api/product/detail/${id}`, data)
+            if (response.data.success) {
+                dispatch({
+                    type: UPDATE_DETAIL_SUCCESS,
+                    payload: response.data.detailProduct
+                })
+                return response.data
+            }
+        } catch (error) {
+            console.log(error)
+        }
+       
+    }
 
     
      
@@ -85,6 +101,7 @@ const DetailContextProvider = ({children}) => {
         getDetail,
         createNewDetail,
         deleteDetail,
+        updateDetail
 
       
     }

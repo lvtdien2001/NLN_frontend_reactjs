@@ -5,10 +5,13 @@ const OrderContext = createContext();
 const OrderContextProvider = ({children}) => {
     const [products, setProducts] = useState([]);
     const [totalAmount, setTotalAmount] = useState(0);
+    const [allOrders, setAllOrders] = useState([]);
+    const [orders, setOrders] = useState([]);
 
     //context data
     const orderContextData = {
-        products, setProducts, totalAmount, setTotalAmount
+        products, setProducts, totalAmount, setTotalAmount, 
+        orders, setOrders, allOrders, setAllOrders
     }
 
 

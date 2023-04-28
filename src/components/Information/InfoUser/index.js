@@ -47,14 +47,14 @@ function InfoUser() {
                                 {user.phoneNumber ? user.phoneNumber : 'Chua co sdt'}
                             </div>
                         </div>
-                        <div className={cx('user-item')}>
+                        {/* <div className={cx('user-item')}>
                             <div>
                                 Tiền hiện có:
                             </div>
                             <div className={cx('user-value')}>
                                 {user.cash ? user.cash : 'Không có đồng nào bạn ơi. haha !!'}
                             </div>
-                        </div>
+                        </div> */}
                         <div className={cx('btn-edit')}>
                             <EditInfo />
                         </div>

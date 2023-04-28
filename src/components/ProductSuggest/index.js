@@ -1,24 +1,29 @@
+import { useEffect, useState } from 'react';
 import { Card } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import classNames from 'classnames/bind';
 
 import styles from './ProductSuggest.module.scss';
-import { useEffect, useState } from 'react';
+import CustomSpinner from '../CustomSpinner';
 import request from '../../utils/request';
-import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
 function ProductSuggest() {
-    const [ suggestProducts, setSuggestProducts] = useState([])
+    const [suggestProducts, setSuggestProducts] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     useEffect(()=> {
         const getSuggestProduct = async () => {
-            await request('/product/detail/suggest/latest')
-            .then((res) => {
-                if(res.data.success) {
-                    setSuggestProducts(res.data.suggestProducts)
-                }
-            })
+            setLoading(true);
+            await request
+                .get('/product/detail/suggest/latest')
+                .then((res) => {
+                    if(res.data.success) {
+                        setSuggestProducts(res.data.suggestProducts);
+                        setLoading(false);
+                    }
+                })
         }
         getSuggestProduct()
     }, [])
@@ -63,7 +68,7 @@ function ProductSuggest() {
         <div className={`${cx('wrapper')}`}>
             <b className={cx('title')}>GỢI Ý</b>
             <div className={`row justify-content-around ${cx('content')}`}>
-                {body}
+                {loading ? <CustomSpinner /> : body}
             </div>
         </div>
     )

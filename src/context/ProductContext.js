@@ -8,7 +8,7 @@ import axios from 'axios';
 
 //const type
 import { 
-    PRODUCTS_LOADED_FAIL, PRODUCTS_LOADED_SUCCESS, CREATE_PRODUCT_SUCCESS, DELETE_PRODUCT_SUCCESS
+    PRODUCTS_LOADED_FAIL, PRODUCTS_LOADED_SUCCESS, CREATE_PRODUCT_SUCCESS, DELETE_PRODUCT_SUCCESS, UPDATE_PRODUCT_SUCCESS
 } from './constanst';
 
 export const  ProductContext = createContext();
@@ -19,6 +19,7 @@ const ProductContextProvider = ({children}) => {
     // const {authState: {user}} = useContext(AuthContext)
     // page
     const [pageNumber, setPageNumber] = useState(1)
+    const [call, setCall] = useState(false)
     const [productState, dispatch] = useReducer(productReducer, {
        product: null,
        products: [],
@@ -26,9 +27,9 @@ const ProductContextProvider = ({children}) => {
     });
 
     // Get all product    
-    const getProducts = async (currentPage) => {
+    const getProducts = async () => {
         try {
-            const response = await axios.get(`${API}/api/product?pageSize=12&page=${currentPage}`)
+            const response = await axios.get(`${API}/api/product`)
             if (response.data.success) {
                 dispatch({
                     type: PRODUCTS_LOADED_SUCCESS,
@@ -59,13 +60,13 @@ const ProductContextProvider = ({children}) => {
         }
     }
     // Delete a post
-    const deleteProduct = async postId => {
+    const deleteProduct = async id => {
         try {
-            const response = await axios.delete(`${API}/api/posts/${postId}`)
+            const response = await axios.delete(`${API}/api/product/${id}`)
             if (response.data.success) {
                 dispatch({
                     type: DELETE_PRODUCT_SUCCESS,
-                    payload: postId
+                    payload: id
                 })
                 return response.data
             }
@@ -77,23 +78,22 @@ const ProductContextProvider = ({children}) => {
    
 
 
-    // Update a post
-    // const updatePost = async updatePost => {
-    //     try {
-    //         const response = await axios.put(`${API}/posts/${updatePost._id}`, updatePost)
-    //         if (response.data.success) {
-    //             dispatch({
-    //                 type:UPDATE_POST_SUCCESS,
-    //                 payload: response.data.post
-    //             })
-    //             return response.data
-    //         }
-    //     } catch (error) {
-    //         return error.response.data
-    //         ? error.response.data
-    //         : { success: false, message: 'Server error' }
-    //     }
-    // }
+    //Update a product
+    const updateProduct = async (data, id) => {
+        try {
+            const response = await axios.put(`${API}/api/product/${id}`, data)
+            if (response.data.success) {
+                dispatch({
+                    type:UPDATE_PRODUCT_SUCCESS
+                })
+                return response.data
+            }
+        } catch (error) {
+            return error.response.data
+            ? error.response.data
+            : { success: false, message: 'Server error' }
+        }
+    }
     
      
     
@@ -106,8 +106,8 @@ const ProductContextProvider = ({children}) => {
         getProducts,
         createNewProduct,
         deleteProduct,
-
-
+        updateProduct,
+        call, setCall,
         pageNumber, setPageNumber
       
     }

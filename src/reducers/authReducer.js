@@ -36,9 +36,7 @@ const authReducer = (state, action) => {
                 }
             case UPDATE_ADDRESS_DEFAULT:
                 const id = state.allAddresses.find(address => address._id === addressID);
-                // const newUpdate = {...state.user, id}
-                // console.log('idaddres',id)
-                // console.log('user', user)
+               
                 return {
                     ...state,
                     user: {...state.user, address: id}

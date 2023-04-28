@@ -5,9 +5,10 @@
 
 }
 .wrapper {
-    border: solid 1px #000;
-    margin: 20px;
+    border: solid 1px #c6c2c2;
+    // margin: 20px;
     border-radius: 10px;
+
 
 }
 .title {
@@ -18,4 +19,9 @@
 }
 .star {
     color: #fbca04;
+}
+.commentList {
+    overflow: scroll;
+    height: 400px;
+    overflow-x: hidden;
 }

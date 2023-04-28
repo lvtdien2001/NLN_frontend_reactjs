@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import classNames from 'classnames/bind';
+import { useParams } from 'react-router-dom';
+
 import styles from './Products.module.scss';
-import GetAllProducts from '../../components/Products/GetAllProducts';
 import request from '../../utils/request';
 import CustomSpinner from '../../components/CustomSpinner';
-import { useParams } from 'react-router-dom';
+import ProductSuggest from '../../components/ProductSuggest';
+import Filter from '../../components/Filter';
 
 const cx = classNames.bind(styles)
 
@@ -35,8 +37,8 @@ function Products() {
 
   return (
     <div className={cx('')}>
-        {loading ? <CustomSpinner /> : <GetAllProducts listProducts={products} />}
- 
+        {loading ? <CustomSpinner /> :  <Filter data={products}/>} 
+        <ProductSuggest />
     </div>
   )
 }

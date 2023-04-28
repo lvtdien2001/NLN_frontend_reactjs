@@ -7,7 +7,8 @@ import {AiFillStar,AiOutlineStar} from 'react-icons/ai'
 import { AuthContext } from "../../../context/AuthContext";
 import EditComment from "../EditComment";
 import NewComment from "../NewComment";
-
+import moment from "moment";
+import 'moment/locale/vi';
 //import { connect } from "mongoose";
 
 
@@ -15,10 +16,21 @@ import NewComment from "../NewComment";
 const cx = classNames.bind(styles)
 function Comment({productId}) {
   const [comments, setComments] = useState([]);
-  const [commentUser, setCommentUser] = useState(null );
+  const [commentUser, setCommentUser] = useState();
   const {authState} = useContext(AuthContext)
   const authUser = authState.user
-  // console.log(user)
+
+  useEffect(() => {
+    const fetchApi = async () => {
+      await request 
+         .get(`/comment?product=${productId}`)
+         .then((res) => {
+          setCommentUser(res.data.comment)
+         })
+    }
+    fetchApi();
+  }, [])
+
   useEffect(() => {
     if (!productId) return;
 
@@ -34,14 +46,24 @@ function Comment({productId}) {
           console.error(error);
         });
 
-        await request 
-         .get(`/comment?product=${productId}`)
-         .then((res) => {
-          setCommentUser(res.data.comment)
-         })
     };
     fetchApi();
-  }, []);
+  }, [commentUser]);
+
+  const Title = () => {
+    return (
+      <Col>
+        Bình Luận, Đánh Giá &nbsp;
+        {
+          comments.length === 0 ?
+          <span className="text-secondary">(Chưa có đánh giá)</span> :
+          <span className="text-secondary">
+            ({comments.length} đánh giá)
+          </span>
+        }
+      </Col>
+    )
+  }
 
   const rating = (rate)=>{
     let stars = []
@@ -60,9 +82,15 @@ function Comment({productId}) {
   return (
     
     <div className={`${cx('wrapper')}`}>
-    <Row className={cx('title')}>Bình Luận, Đánh Giá</Row> 
+    <Row className={cx('title')}>
+      <Title />
+    </Row> 
     {/* s */}
-      <ListGroup>
+      {!commentUser ? 
+        <NewComment productId={productId} setComments={setComments} setCommentUser={setCommentUser} /> :
+        <EditComment commentUser={commentUser} setCommentUser={setCommentUser} />
+      }
+      <ListGroup className={cx('commentList')}>
         {comments.map((comment)=>{
           const content  = comment?.content
           const {  rate ,user,createdAt,_id} = comment;
@@ -75,7 +103,7 @@ function Comment({productId}) {
                     
                     <img alt="avatar" src={image || authUser.image} className={cx('avatar')}/>&nbsp;&nbsp;&nbsp;
                     {fullName}&nbsp;&nbsp;&nbsp;&nbsp; 
-                    {createdAt.substring(0,10)}
+                    <span className="text-secondary">{moment(createdAt).fromNow()}</span>
                   </Col>
                 </Row>
                 <Row>
@@ -91,7 +119,7 @@ function Comment({productId}) {
                 </Row>
                 <Row>
                   <Col> {content}</Col>
-                  <Col>{authUser && authUser._id === user._id&& <EditComment commentId={_id} contents={content} rates={rate} setComments={setComments} userId={user._id}/>}</Col>
+                  {/* <Col>{authUser && authUser._id === user._id&& <EditComment commentId={_id} contents={content} rates={rate} setComments={setComments} userId={user._id}/>}</Col> */}
                 </Row>
                 
             </ListGroup.Item>
@@ -100,7 +128,7 @@ function Comment({productId}) {
       })}
 
       </ListGroup>
-     <NewComment productId={productId} setComments={setComments}/>
+     
     </div>
  
   );

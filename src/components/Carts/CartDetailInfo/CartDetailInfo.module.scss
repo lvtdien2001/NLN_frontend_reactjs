@@ -7,7 +7,7 @@
     padding: 10px;
     border: solid 1px #b9b5b5;
     border-radius: 20px;
-    background-color: #fff;
+    background-color: #ffffff;
 }
 
 .title {
@@ -70,4 +70,30 @@
 .hrefUnderline {
     text-decoration: none;
     color: #333;
+}
+
+.emptyWrapper {
+    // border: solid 1px #333;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+    background-color: #fff;
+    font-size: 24px;
+}
+
+.wrapper {
+    border: 1px solid #333;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.emptyCart {
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: solid 1px var(--bs-gray);
+    border-radius: 20px;
 }

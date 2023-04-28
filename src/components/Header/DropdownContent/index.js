@@ -6,7 +6,7 @@ import { Dropdown, DropdownButton } from 'react-bootstrap';
 import { AiOutlineUser, AiOutlineFileText, AiOutlineLogout } from 'react-icons/ai';
 import { FaUsers, FaRegAddressCard } from 'react-icons/fa';
 import { RiBillLine } from 'react-icons/ri';
-import { MdDevicesOther, MdOutlinePayment } from 'react-icons/md';
+import { MdDevicesOther } from 'react-icons/md';
 
 import { AuthContext } from '../../../context/AuthContext';
 
@@ -40,6 +40,11 @@ const DropdownContent = () => {
                 <Link className={cx('hrefUnderline')} to='/admin/products'>
                     <Dropdown.Item as='div'>
                         <MdDevicesOther /> Quản lý sản phẩm
+                    </Dropdown.Item>
+                </Link>
+                <Link className={cx('hrefUnderline')} to='/admin/grossing'>
+                    <Dropdown.Item as='div'>
+                        <MdDevicesOther /> Quản lý doanh thu
                     </Dropdown.Item>
                 </Link>
 
@@ -76,7 +81,7 @@ const DropdownContent = () => {
             </Link> */}
             <Link className={cx('hrefUnderline')} to='/orders'>
                 <Dropdown.Item as='div'>
-                    <AiOutlineFileText /> Đơn hàng
+                    <AiOutlineFileText /> Lịch sử mua hàng
                 </Dropdown.Item>
             </Link>
 

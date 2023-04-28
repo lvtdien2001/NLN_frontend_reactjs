@@ -7,12 +7,14 @@ import { AiFillDelete, AiOutlineFileImage } from 'react-icons/ai';
 import request from '../../../utils/request';
 import { ProductContext } from '../../../context/ProductContext';
 import { MessageContext } from '../../../context/MessageContext';
+import CustomSpinner from '../../CustomSpinner';
 
 
 const cx = classNames.bind(styles);
 function AddProduct() {
     const {createNewProduct} = useContext(ProductContext);
-    const {setShowToast, setInforMessage} = useContext(MessageContext)
+    const {setShowToast, setInforMessage} = useContext(MessageContext);
+    const [loading, setLoading] = useState(false)
     const [show, setShow] = useState(false);
     const [category, setCategory] = useState([]);
     const [productor, setProductor] = useState([]);
@@ -105,6 +107,7 @@ function AddProduct() {
                 })
                 return ;
               }
+              setLoading(true)
               const res = await createNewProduct(formData, categoryID, productorID);
               if(res.success) {
                 setShowToast(true);
@@ -121,6 +124,7 @@ function AddProduct() {
                 setAvatarDefault(null);
                 setFile(null);
                 handleClose();
+                setLoading(false)
               }
         } catch (error) {
             console.log(error)
@@ -202,9 +206,12 @@ function AddProduct() {
                         <Button style={{marginRight: '10px'}} variant="outline-secondary" onClick={handleClose}>
                             Hủy
                         </Button>
-                        <Button variant="primary" type='submit'>
-                            Thêm
-                        </Button>
+                        {
+                            loading ? <CustomSpinner /> : 
+                            <Button variant="primary" type='submit'>
+                                Thêm
+                            </Button>
+                        }
                     </Form.Group>
                 </Form>
                 </Modal.Body>

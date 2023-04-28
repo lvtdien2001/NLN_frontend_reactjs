@@ -19,7 +19,7 @@ const cx = classNames.bind(styles);
 function AddressForm() {
   const navigate = useNavigate();
   const { setShowToast, setInforMessage, inforMessage} = useContext(MessageContext);
-  const {createAddress} = useContext(AuthContext);
+  const {createAddress, updateAddressDefault, authState:{allAddresses}} = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
 
   const [provinces, setProvinces] = useState([]);
@@ -65,6 +65,7 @@ function AddressForm() {
   //       setProvinces(response.data);
   //     });
   // }, []);
+  console.log(allAddresses?.length)
     const handleSubmitAddress = async (e) => {
       e.preventDefault();
       if (!form.fullName || !form.phoneNumber || !form.description ) {
@@ -100,9 +101,9 @@ function AddressForm() {
       }
       try {
           setLoading(true);
-          console.log(form);
+         
           const res = await createAddress(form);
-          console.log(res)
+         
           if(res.success) {
             setShowToast(true);
             setInforMessage({
@@ -112,8 +113,12 @@ function AddressForm() {
             })
             setTimeout(() => {
                 setLoading(false);
+                if(allAddresses.length === 0) {
+                  updateAddressDefault(res.id)
+                }
                 return navigate('/address');
             },1000)
+            
           }
           
       } catch (error) {

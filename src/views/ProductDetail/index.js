@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 import styles from './ProductDetail.module.scss';
 
 
-
+import Nav from '../../components/Nav';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -14,8 +14,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import CustomSpinner from "../../components/CustomSpinner";
 import DetailProduct from "../../components/Products/DetailProduct";
-import ModalCart from "../../components/Carts/ModalCart";
-import Comment from "../../components/Comments/CommentForm";
+
 
 
 const cx = classNames.bind(styles)
@@ -25,6 +24,19 @@ function ProductDetail() {
     const [allDetail, setAllDetail] = useState([]);
     const [currentDetail, setCurrentDetail] = useState({});
     const {id} = useParams();
+
+    const contentNav = [
+        {
+            id: 1,
+            name: product?.category?.category,
+            url: `/products/${product?.category?._id}`
+        },
+        {
+            id: 2,
+            name: product?.name,
+            url: '#'
+        }
+    ]
 
     useEffect(() => {
         const getProductById = async () => {
@@ -59,16 +71,16 @@ function ProductDetail() {
     ))
     return (
         <Container>
+            <Nav content={contentNav} />
             <Row>
                 <Col className={cx('layout')}>
                     <div className={cx('product-name')}>{product.name}</div>
-                   {loading ? <CustomSpinner /> :  <DetailProduct currentDetail={currentDetail} />}
+                   {loading ? <CustomSpinner /> :  <DetailProduct currentDetail={currentDetail} allDetail={allDetail} />}
                   <div className={cx('detail')}>{detail}</div> 
-                  <ModalCart allDetail={allDetail} />
-                  <Comment productId={id} />
+                  {/* <ModalCart allDetail={allDetail} /> */}
+                  {/* <Comment productId={id} /> */}
                 </Col> 
             </Row>
-           
             
         </Container>
           

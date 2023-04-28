@@ -5,6 +5,8 @@ import classNames from 'classnames/bind';
 import styles from './InfoDetail.module.scss';
 import AddDetail from '../AddDetail';
 import { DetailContext } from '../../../context/DetailContext';
+import RemoveDetailProduct from '../RemoveDetailProduct';
+import EditDetail from '../EditDetail';
 
 
 
@@ -31,7 +33,7 @@ const InfoDetail = ({detailProduct, product}) => {
   
     
     const bodyDetail = detailProduct.map((item, index) => (
-        <tr key={item?._id}>
+        <tr key={item?._id} className={item?.quantity <= 10 ? cx('tr') : ''}>
             <td className="text-center">{index+1}</td>
 
             
@@ -48,8 +50,8 @@ const InfoDetail = ({detailProduct, product}) => {
                 {item?.quantity}
             </td>
             <td className="text-center">
-                {/* <EditProduct data={product} />
-                <RemoveProduct /> */}
+                <EditDetail data={item} />
+                <RemoveDetailProduct id={item._id} />
             </td>
     </tr>
     ))
@@ -65,8 +67,8 @@ const InfoDetail = ({detailProduct, product}) => {
           </Modal.Header>
           <Modal.Body className={cx('modal')}>
             <AddDetail product={product} />
-            <div className={`row justify-content-center`}>
-                <div className='col-sm-10 '>
+            <span className={`row justify-content-center`}>
+                <span className='col-sm-10 '>
                     
                     <Table responsive striped bordered hover>
                         <thead>
@@ -78,15 +80,17 @@ const InfoDetail = ({detailProduct, product}) => {
                                 <th className={cx('detail')}>Màu sắc</th>
                                 <th className={cx('icon')}>Giá tiền</th>
                                 <th className={cx('icon')}>Số lượng</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             {detailLoading ? <CustomSpinner /> : bodyDetail }
                         </tbody>
+                        
                     </Table>
                     
-                </div>
-            </div>
+                </span>
+            </span>
              
           </Modal.Body>
           

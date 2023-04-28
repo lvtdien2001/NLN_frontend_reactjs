@@ -7,6 +7,8 @@ import { Form } from 'react-bootstrap';
 import { AiFillDelete, AiOutlineFileImage } from 'react-icons/ai';
 import { MessageContext } from '../../../context/MessageContext';
 import { DetailContext } from '../../../context/DetailContext';
+import CustomSpinner from '../../CustomSpinner';
+import { ProductContext } from '../../../context/ProductContext';
 
 
 
@@ -16,7 +18,9 @@ const cx = classNames.bind(styles);
 function AddDetail({product}) {
   const {setShowToast, setInforMessage} = useContext(MessageContext);
   const {createNewDetail} = useContext(DetailContext)
+  const {call, setCall} = useContext(ProductContext)
   const [show, setShow] = useState(false);
+  const [loading, setLoading] = useState(false)
   const [validated, setValidated] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -82,9 +86,9 @@ function AddDetail({product}) {
       formData.append('price',price);
       formData.append('quantity', quantity);
       formData.append('color',color);
-     
+      setLoading(true)
       const res = await createNewDetail(formData, product._id);
-      console.log(res);
+      // console.log(res);
       if(res.success) {
         setShowToast(true);
         setInforMessage({
@@ -99,7 +103,9 @@ function AddDetail({product}) {
           color:''
         })
         setAvatarDefault(null);
-        setFile(null)
+        setFile(null);
+        setLoading(false)
+        setCall(!call)
         handleClose();
       }
 
@@ -125,6 +131,7 @@ function AddDetail({product}) {
                         <Form.Control 
                             type="number" 
                             name='price'
+                            min={1}
                             placeholder='Nhập Giá tiền'
                             value={price}
                             onChange={handleChangeData}
@@ -161,8 +168,8 @@ function AddDetail({product}) {
                     <Form.Group className="mb-3" controlId="exampleForm.ControlInput4">
                         <Form.Label>Size:</Form.Label>
                         <Form.Control 
-                            type="password" 
-                            placeholder="Nhập lại mật khẩu"
+                            type="text" 
+                            placeholder="Nhập kích cỡ"
                             name='size'
                             value={size}
                             onChange={handleChangeData}
@@ -195,9 +202,11 @@ function AddDetail({product}) {
                         <Button style={{marginRight: '10px'}} variant="outline-secondary" onClick={handleClose}>
                             Hủy
                         </Button>
+                        {loading ? <CustomSpinner /> : 
                         <Button variant="primary" type='submit'>
                             Thêm
                         </Button>
+                        }
                     </Form.Group>
                     
                 </Form>

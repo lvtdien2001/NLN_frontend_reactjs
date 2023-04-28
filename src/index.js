@@ -8,19 +8,25 @@ import AuthContextProvider from './context/AuthContext';
 import ProductContextProvider from './context/ProductContext';
 import MessageContextProvider from './context/MessageContext';
 import DetailContextProvider from './context/DetailContext';
+import OrderContextProvider from './context/OrderContext';
+import UserContextProvider from './context/UserContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <AuthContextProvider>
     <ProductContextProvider>
       <DetailContextProvider>
-        <MessageContextProvider>
-          <GlobalStyle>
-            <React.StrictMode>
-              <App />
-            </React.StrictMode>
-          </GlobalStyle>
-        </MessageContextProvider>
+        <OrderContextProvider>
+          <UserContextProvider>
+            <MessageContextProvider>
+              <GlobalStyle>
+                
+                  <App />
+                
+              </GlobalStyle>
+            </MessageContextProvider>
+          </UserContextProvider>
+        </OrderContextProvider>
       </DetailContextProvider>
     </ProductContextProvider>
   </AuthContextProvider>

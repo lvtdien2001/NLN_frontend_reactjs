@@ -54,7 +54,7 @@ function Register(){
                 setInforMessage({type: 'success', title:'Đăng ký', description: 'Chúc mừng bạn đã đăng ký thành công !!'});
                 return navigate('/');
             } else {
-                setShowToast(false);
+                setShowToast(true);
                 setInforMessage({type: 'danger', title:'Đăng ký', description: res.message })
             }
         } catch (error) {
