@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
-import { Button, Modal, Form, Row, Col, Figure } from 'react-bootstrap';
-import { FaPen, FaTrash } from 'react-icons/fa';
+import { Button, Modal, Form } from 'react-bootstrap';
+import { FaPen } from 'react-icons/fa';
 import classNames from 'classnames/bind';
 
 import styles from './EditDetail.module.scss';
@@ -56,7 +56,7 @@ function EditDetail({ data }) {
                         />
                     </Form.Group>
                     <Form.Group className="mb-3">
-                        <Form.Label>Số lượng:</Form.Label>
+                        <Form.Label>Thêm số lượng:</Form.Label>
                         <Form.Control 
                             type="number" 
                             placeholder="Thêm số lượng sản phẩm"

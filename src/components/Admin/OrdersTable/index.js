@@ -35,8 +35,10 @@ function OrdersTable({data}) {
     }
 
     const handleEditStatus = async (status, id) => {
+
         await request
             .put(`/order/${id}`, {
+                isPayment: status==='Đã nhận' ? true : undefined,
                 status
             })
             .then(res => {

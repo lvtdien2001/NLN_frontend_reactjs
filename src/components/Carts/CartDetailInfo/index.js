@@ -208,7 +208,7 @@ const CartDetailInfo = ({ data, names }) =>{
             {user.address===undefined && 
             <h6 className='text-danger text-center'>
                 Lưu ý: Bạn chưa cập nhật địa chỉ nhận hàng. Để cập nhật địa chỉ hãy&nbsp;
-                <Link to='/address'>nhấn vào đây</Link>
+                <Link to='/address/create'>nhấn vào đây</Link>
             </h6>}
             <Row className={`align-items-center ${cx('title')}`}>
                 <Col xl={1}></Col>

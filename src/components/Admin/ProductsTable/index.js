@@ -1,6 +1,5 @@
 import { Table, Form } from 'react-bootstrap';
 import classNames from 'classnames/bind';
-import { Link } from 'react-router-dom';
 
 import styles from './ProductsTable.module.scss';
 
@@ -17,8 +16,8 @@ import EditProduct from '../EditProduct';
 const cx = classNames.bind(styles);
 
 function ProductsTable() {
-    const {getProducts, dispatch, productState: {products}, call} = useContext(ProductContext);
-    const {getDetail,detailState: {detailProducts, detailsLoading}} = useContext(DetailContext)
+    const {getProducts, productState: {products}, call} = useContext(ProductContext);
+    const {getDetail,detailState: {detailProducts}} = useContext(DetailContext)
     const [id, setId] = useState();
     const [category, setCategory] = useState('all')
     const [productor, setProductor] = useState('all')

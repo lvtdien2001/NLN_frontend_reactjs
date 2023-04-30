@@ -42,10 +42,10 @@ const AllAddresses = () => {
                                     <div>
                                         <span className={cx('fullname')}>{user?.address?.fullName}</span> <span className={cx('phoneNumber')}>{user?.address?.phoneNumber}</span>
                                     </div>
-                                    <div >
+                                    {/* <div >
                                     <ModalEditAddress />
                                    
-                                    </div>
+                                    </div> */}
                                     
                                 </div>
                                 <div className={cx('description')}><span className={cx('description-value')}>{user?.address?.description}</span> </div>
@@ -73,10 +73,10 @@ const AllAddresses = () => {
                                         <span className={cx('fullname')}>{address?.fullName}</span> <span className={cx('phoneNumber')}>{address?.phoneNumber}</span>
                                     </div>
                                     <div className={cx('layout-handle')}>
-                                        <div>
+                                        {/* <div>
                                             <ModalEditAddress />
                                           
-                                        </div>
+                                        </div> */}
                                         <div className={cx('btn-delete')}>
                                             {address._id !== user?.address?._id && <ModalDeleteAddress address={address} />}
                                         </div>     

@@ -2,10 +2,9 @@ import { useEffect, useState } from 'react';
 import request from '../../utils/request';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { Row, Col, Card, Button, ButtonGroup } from 'react-bootstrap';
+import { Row, Col, Card } from 'react-bootstrap';
 import classNames from 'classnames/bind';
 import styles from './Search.module.scss';
-import GetAllProducts from '../../components/Products/GetAllProducts';
 import Feedback from 'react-bootstrap/esm/Feedback';
 
 const cx = classNames.bind(styles);
@@ -22,7 +21,7 @@ function Search({data}) {
   const handleClickProductDetails = (id) => {
     return navigate(`/product/${id}`);
   };
-  console.log(products);
+
   const newArray = products.map((data)=>data.category.category)
   const myArray = [...new Set(newArray)]
   const newArrays = products.map((data)=>data.productor.name)
@@ -55,16 +54,16 @@ function Search({data}) {
         return name.substring(0, 31) + '...'
     }
 
-    const formatPrice = price => {
-        if (price.length <= 3)
-            return price;
+    // const formatPrice = price => {
+    //     if (price.length <= 3)
+    //         return price;
 
-        let priceFormat = [];
-        for (let i=price.length; i>0; i-=3)
-            priceFormat.push(price.substring(i-3, i));
+    //     let priceFormat = [];
+    //     for (let i=price.length; i>0; i-=3)
+    //         priceFormat.push(price.substring(i-3, i));
 
-        return priceFormat.reverse().join('.');
-    }
+    //     return priceFormat.reverse().join('.');
+    // }
  return (
   <div className={cx('container')}>
       <Row>
@@ -79,14 +78,14 @@ function Search({data}) {
       </div>
       <Row>
       <Col>
-      <label htmlFor="brand-select" className={cx('titles')}><h5>Loại:</h5></label>
+      <label htmlFor="brand-select" className={cx('titles')}><h5>Hãng:</h5></label>
           <select id="brand-select" defaultValue="All" value={filterCategogy} onChange={(e)=>setFilterCategogy(e.target.value)}>
             <option value="All">Tất cả</option>
             {myArrays?.map((product)=> <option key={product} value={product}>{product}</option>)}
           </select>
       </Col>
       <Col>
-      <label htmlFor="brand-select" className={cx('titles')}><h5>Hãng:</h5></label>
+      <label htmlFor="brand-select" className={cx('titles')}><h5>Loại:</h5></label>
           <select id="brand-select" defaultValue="All" value={filterProductor} onChange={(e)=>setFilterProductor(e.target.value)}>
             <option value="All">Tất cả</option>
                  {myArray?.map((product)=> <option key={product} value={product}>{product}</option>)}
